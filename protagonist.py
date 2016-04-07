@@ -35,7 +35,7 @@ class Protagonist(Character):
     def __init__(self, name, description):
         Character.__init__(self, name, description, True)
         self.level = 1
-        self.location = 0
+        self.location = None
         self.rucksack = []
         self.weaponInHand = None
         self.shieldInHand = None

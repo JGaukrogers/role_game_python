@@ -17,7 +17,7 @@ class Place:
         self.__connections_list = connections
         self.__objects_list = objects
 
-        # TODO: get possible paths and objects
+        # TODO: get possible objects
         self.__enemies_list = []
         self.__possiblePaths_list = []
 
@@ -25,14 +25,23 @@ class Place:
         string = self._id + ": " + self.__name + ": " + self.__description
         return string
 
+    def get_name(self):
+        return self.__name
+
     def get_id(self):
         return self._id
+
+    def get_paths(self):
+        return self.__possiblePaths_list
 
     def get_connection_ids(self):
         return self.__connections_list
 
     def add_path(self, place):
         self.__possiblePaths_list.append(place)
+
+    def get_description(self):
+        return self.__description
 
     def __str__(self):
         string = self._id + ": " + self.__name

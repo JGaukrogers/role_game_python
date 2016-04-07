@@ -3,7 +3,7 @@
 from game_reader import GameReader
 # from place import Place
 from protagonist import Protagonist
-GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT","EXIT", "PICKUP"];
+GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT", "EXIT", "PICKUP"]
 
 
 class Game:
@@ -12,6 +12,15 @@ class Game:
     def __print_commands():
         for s in sorted(GAME_COMMANDS):
             print(s)
+
+    def goto(self, where):
+        message = "Cannot go to " + where
+        possible_goes = self.protagonist.get_location().get_paths()
+        for p in possible_goes:
+            if p.get_name().upper() == where.upper():
+                self.protagonist.set_location(p)
+                message = "You go to " + where
+        return message
 
     # Play!
     def play_game(self):
@@ -27,15 +36,35 @@ class Game:
 
             if split_command[0] == "LOOK":
                 if len(split_command) == 1:
-                    # todo: print current location
-                    pass
+                    print(self.protagonist.get_location().get_description())
                 else:
                     # todo: print desired stuff
                     pass
             elif split_command[0] == "GO":
+                if len(split_command) == 1:
+                    print("Go where?")
+                    pass
+                else:
+                    where = split_command[1]
+                    print(self.goto(where))
+                    # todo: go to desired place if possible
+                    pass
+            elif split_command[0] == "SEARCH":
                 print("going to some place")
             elif split_command[0] == "FIGHT":
-                print("fighting")
+                if len(split_command) == 1:
+                    # todo: give error message
+                    pass
+                else:
+                    # todo: fight desired enemy if possible
+                    pass
+            elif split_command[0] == "PICKUP":
+                if len(split_command) == 1:
+                    # todo: give error message
+                    pass
+                else:
+                    # todo: pickup desired stuff if possible
+                    pass
             elif split_command[0] == "EXIT":
                 print("bye")
             else:
@@ -63,6 +92,7 @@ class Game:
 
         # 3 - temporaer protagonist erzeugen. In der zukunft soll es auch gelesen werden
         self.protagonist = Protagonist("Cris", "Cris is a demo warrior")
+        self.protagonist.set_location(self.begin_place)
 
     # Returns true for loading a game, or false for exiting
     def load_or_exit(self):
