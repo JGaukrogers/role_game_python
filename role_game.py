@@ -47,8 +47,6 @@ class Game:
                 else:
                     where = split_command[1]
                     print(self.goto(where))
-                    # todo: go to desired place if possible
-                    pass
             elif split_command[0] == "SEARCH":
                 print("going to some place")
             elif split_command[0] == "FIGHT":
