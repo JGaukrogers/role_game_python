@@ -22,6 +22,25 @@ class Game:
                 message = "You go to " + where
         return message
 
+    def look_at(self, what):
+        message = "Cannot look at " + what
+        # Look at location?
+        possible_goes = self.protagonist.get_location().get_paths()
+        for p in possible_goes:
+            if p.get_name().upper() == what.upper():
+                message = "You can see the " + what + " from here"
+
+        # todo: Look at object?
+        # Look at enemy?
+        possible_enemies = self.protagonist.get_location().get_enemies()
+        for e in possible_enemies:
+            if e.get_name().upper() == what.upper():
+                if e.is_alive():
+                    message = e.get_description()
+                else:
+                    message = "You see a dead " + e.get_name
+        return message
+
     # Play!
     def play_game(self):
         # TODO: code
@@ -36,9 +55,9 @@ class Game:
 
             if split_command[0] == "LOOK":
                 if len(split_command) == 1:
-                    print(self.protagonist.get_location().get_description())
+                    print(self.protagonist.get_location().get_full_description())
                 else:
-                    # todo: print desired stuff
+                    print(self.look_at(split_command[1]))
                     pass
             elif split_command[0] == "GO":
                 if len(split_command) == 1:
@@ -48,7 +67,7 @@ class Game:
                     where = split_command[1]
                     print(self.goto(where))
             elif split_command[0] == "SEARCH":
-                print("going to some place")
+                print("searching")
             elif split_command[0] == "FIGHT":
                 if len(split_command) == 1:
                     # todo: give error message
@@ -87,6 +106,8 @@ class Game:
 
         # 2 - feinde zu den places weitergeben
         self.enemies_array = gr.get_enemies_list()
+        for enemy in self.enemies_array:
+            self.places_array[enemy.get_location()].add_enemy(enemy)
 
         # 3 - temporaer protagonist erzeugen. In der zukunft soll es auch gelesen werden
         self.protagonist = Protagonist("Cris", "Cris is a demo warrior")

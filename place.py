@@ -34,14 +34,29 @@ class Place:
     def get_paths(self):
         return self.__possiblePaths_list
 
+    def get_enemies(self):
+        return self.__enemies_list
+
     def get_connection_ids(self):
         return self.__connections_list
 
     def add_path(self, place):
         self.__possiblePaths_list.append(place)
 
+    def add_enemy(self, enemy):
+        self.__enemies_list.append(enemy)
+
     def get_description(self):
         return self.__description
+
+    def get_full_description(self):
+        string = self.__description
+        for e in self.__enemies_list:
+            if e.is_alive():
+                string += "\n" + "You see a " + e.get_name() + ". " + e.get_description()
+            else:
+                string += "\n" + "You see a dead " + e.get_name()
+        return string
 
     def __str__(self):
         string = self._id + ": " + self.__name
