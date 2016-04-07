@@ -31,7 +31,7 @@
 			</weapon>
 		</objects>
 	</place>
-		<place>
+	<place>
 		<name>Town</name>
 		<id>3</id>
 		<description>You are in the Town. The people seem peaceful, but are afraid about bandits.</description>
