@@ -1,6 +1,3 @@
-#!/usr/bin/python3.4
-
-
 class Character:
 
     def is_alive(self):
