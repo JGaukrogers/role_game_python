@@ -1,5 +1,3 @@
-#!/usr/bin/python3.4
-
 from character import Character
 
 

@@ -1,5 +1,3 @@
-#!/usr/bin/python3.4
-
 import xml.etree.ElementTree as ET
 
 from constants import _Const

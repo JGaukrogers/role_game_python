@@ -1,6 +1,3 @@
-#!/usr/bin/python3.4
-
-
 class Place:
     # __name
     # __id

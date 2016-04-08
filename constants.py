@@ -1,6 +1,3 @@
-#!/usr/bin/python3.4
-
-
 def constant(f):
     def fset(self, value):
         raise TypeError
