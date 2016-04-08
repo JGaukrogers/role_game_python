@@ -9,34 +9,34 @@ GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT", "EXIT", "PICKUP"]
 class Game:
 
     @staticmethod
-    def __print_commands():
+    def print_commands():
         for s in sorted(GAME_COMMANDS):
             print(s)
 
     def goto(self, where):
         message = "Cannot go to " + where
-        possible_goes = self.protagonist.get_location().get_paths()
+        possible_goes = self.protagonist.location.possiblePaths_list
         for p in possible_goes:
-            if p.get_name().upper() == where.upper():
-                self.protagonist.set_location(p)
+            if p.name.upper() == where.upper():
+                self.protagonist.location = p
                 message = "You go to " + where
         return message
 
     def look_at(self, what):
         message = "Cannot look at " + what
         # Look at location?
-        possible_goes = self.protagonist.get_location().get_paths()
+        possible_goes = self.protagonist.location.possiblePaths_list
         for p in possible_goes:
-            if p.get_name().upper() == what.upper():
+            if p.name.upper() == what.upper():
                 message = "You can see the " + what + " from here"
 
         # todo: Look at object?
         # Look at enemy?
-        possible_enemies = self.protagonist.get_location().get_enemies()
+        possible_enemies = self.protagonist.location.enemies_list
         for e in possible_enemies:
-            if e.get_name().upper() == what.upper():
-                if e.is_alive():
-                    message = e.get_description()
+            if e.name.upper() == what.upper():
+                if e.is_alive:
+                    message = e.description
                 else:
                     message = "You see a dead " + e.get_name
         return message
@@ -45,7 +45,7 @@ class Game:
     def play_game(self):
         # TODO: code
         print("What do you wish to do?")
-        self.__print_commands()
+        self.print_commands()
 
         split_command = ["BEGIN"]
         while split_command[0] != "EXIT":
@@ -55,7 +55,7 @@ class Game:
 
             if split_command[0] == "LOOK":
                 if len(split_command) == 1:
-                    print(self.protagonist.get_location().get_full_description())
+                    print(self.protagonist.location.get_full_description())
                 else:
                     print(self.look_at(split_command[1]))
                     pass
@@ -85,7 +85,7 @@ class Game:
             elif split_command[0] == "EXIT":
                 print("bye")
             else:
-                self.__print_commands()
+                self.print_commands()
 
     # Loads a game
     def load(self, path):
@@ -96,26 +96,26 @@ class Game:
 
         # 1 - places fertig einrichten (liste mit places geben, bisher haben wir nur id's)
         # We need the places to be in order
-        self.places_array = sorted(gr.get_places_list(), key=lambda place: place._id)
+        self.places_array = sorted(gr.place_list, key=lambda place: place.id)
 
         self.begin_place = self.places_array[0]
         for p in self.places_array:
-            connection_ids = p.get_connection_ids()
+            connection_ids = p.connections_list
             for j in connection_ids:
                 p.add_path(self.places_array[j])
 
         # 2 - feinde zu den places weitergeben
-        self.enemies_array = gr.get_enemies_list()
+        self.enemies_array = gr.enemy_list
         for enemy in self.enemies_array:
-            self.places_array[enemy.get_location()].add_enemy(enemy)
+            self.places_array[enemy.location].add_enemy(enemy)
 
         # 3 - temporaer protagonist erzeugen. In der zukunft soll es auch gelesen werden
         self.protagonist = Protagonist("Cris", "Cris is a demo warrior")
-        self.protagonist.set_location(self.begin_place)
+        self.protagonist.location = self.begin_place
 
     # Returns true for loading a game, or false for exiting
     def load_or_exit(self):
-        print("load games/DemoGame.xml") # for testing purposes
+        print("load games/DemoGame.xml")  # for testing purposes
 
         split_command = ["0"]
         while split_command[0] != "EXIT":

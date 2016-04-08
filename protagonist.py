@@ -5,23 +5,8 @@ from character import Character
 
 class Protagonist(Character):
 
-    def set_level(self, new_level):
-        self.level = new_level
-
-    def get_level(self):
-        return self.level
-
     def increase_level(self):
         self.level += 1
-
-    def set_location(self, new_location):
-        self.location = new_location
-
-    def get_location(self):
-        return self.location
-
-    def get_rucksack(self):
-        return self.rucksack
 
     def add_to_rucksack(self, obj):
         self.rucksack.append(obj)
