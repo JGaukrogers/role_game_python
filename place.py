@@ -11,8 +11,6 @@ class Place:
         self.id = new_id
         self.connections_list = connections
         self.objects_list = objects
-
-        # TODO: get possible objects
         self.enemies_list = []
         self.possiblePaths_list = []
 

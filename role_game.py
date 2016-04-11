@@ -3,7 +3,7 @@
 from game_reader import GameReader
 # from place import Place
 from protagonist import Protagonist
-GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT", "EXIT", "PICKUP"]
+GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT", "EXIT", "PICKUP", "EQUIP"]
 
 
 class Game:
@@ -128,6 +128,9 @@ class Game:
                     print("Pickup what?")
                 else:
                     print(self.pickup(split_command[1]))
+            elif split_command[0] == "EQUIP":
+                # todo: equip swords and shields
+                pass
             elif split_command[0] == "EXIT":
                 print("bye")
             else:
