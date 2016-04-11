@@ -1,6 +1,11 @@
 class Place:
 
-    def __init__(self, name, description, new_id, connections=[], objects=[]):
+    def __init__(self, name, description, new_id, connections=None, objects=None):
+        if connections is None:
+            connections = []
+        if objects is None:
+            objects = []
+
         self.name = name
         self.description = description
         self.id = new_id
