@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 from constants import Const
 from place import Place
 from enemy import Enemy
+from objects import Weapon
 
 
 class GameReader:
@@ -34,8 +35,23 @@ class GameReader:
         for connection in place.iter('connection'):
             aux = int(connection.text)
             connection_list.append(aux)
-        p = Place(place_name, description, place_id, connection_list)
+
+        object_list = self.get_objects(place)
+
+        p = Place(place_name, description, place_id, connection_list, object_list)
         return p
+
+    # todo: enhance for general objects and shields
+    @staticmethod
+    def get_objects(place):
+        object_list = []
+        for obj in place.iter('weapon'):
+            attributes = obj.attrib
+            name = attributes['name']
+            description = attributes['description']
+            attack = int(attributes['attack'])
+            object_list.append(Weapon(name, description, attack))
+        return object_list
 
     def get_enemy(self, enemy):
         name = enemy.find(self.CONST.NAME_TAG).text

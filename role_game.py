@@ -33,7 +33,19 @@ class Game:
         if what.upper() == self.protagonist.location.name.upper():
             message = self.protagonist.location.description
 
-        # todo: Look at object?
+        # todo: test until end
+        possible_objects = self.protagonist.location.objects_list
+        for o in possible_objects:
+            if o.name.upper() == what.upper():
+                message = o.description
+        for o in self.protagonist.rucksack:
+            if o.name.upper() == what.upper():
+                message = o.description
+        if self.protagonist.is_weapon_equipped() and self.protagonist.weaponInHand.upper() == what.upper():
+            message = self.protagonist.weaponInHand.description
+        if self.protagonist.is_shield_equipped() and self.protagonist.shieldInHand.upper() == what.upper():
+            message = self.protagonist.shieldInHand.description
+
         # Look at enemy?
         possible_enemies = self.protagonist.location.enemies_list
         for e in possible_enemies:
@@ -45,7 +57,7 @@ class Game:
         return message
 
     def fight(self, who):
-        message = "There is no " + who + " to kill"
+        message = "There is no " + who + " to fight"
         enemies = self.protagonist.location.enemies_list
         for e in enemies:
             if e.name.upper() == who.upper():
@@ -54,9 +66,33 @@ class Game:
                 break
         return message
 
+    def search(self, what=None):
+        message = ""
+        if what is None:
+            objects_list = self.protagonist.location.objects_list
+            if len(objects_list) == 0:
+                message = "Found nothing"
+            else:
+                for o in objects_list:
+                    message += "Found a " + o.name + "\n"
+        else:
+            # todo: search dead enemy
+            message = "To be done: search " + what
+        return message
+
+    def pickup(self, what):
+        message = "Cannot pickup " + what
+        objects_list = self.protagonist.location.objects_list
+        for o in objects_list:
+            if o.name.upper() == what.upper():
+                self.protagonist.rucksack.append(o)
+                objects_list.remove(o)
+                message = "You just picked up a " + o.name
+                break
+        return message
+
     # Play!
     def play_game(self):
-        # TODO: code
         print("What do you wish to do?")
         self.print_commands()
 
@@ -78,19 +114,20 @@ class Game:
                     where = split_command[1]
                     print(self.goto(where))
             elif split_command[0] == "SEARCH":
-                print("searching")
+                if len(split_command) == 1:
+                    print(self.search())
+                else:
+                    print(self.search(split_command[1]))
             elif split_command[0] == "FIGHT":
                 if len(split_command) == 1:
                     print("Fight against what?")
                 else:
                     print(self.fight(split_command[1]))
-                    # todo: fight desired enemy if possible
             elif split_command[0] == "PICKUP":
                 if len(split_command) == 1:
                     print("Pickup what?")
                 else:
-                    # todo: pickup desired stuff if possible
-                    pass
+                    print(self.pickup(split_command[1]))
             elif split_command[0] == "EXIT":
                 print("bye")
             else:
@@ -144,6 +181,7 @@ class Game:
         self.begin_place = None
         self.enemies_array = None
         self.protagonist = None
+
 
 if __name__ == '__main__':
     game = Game()
