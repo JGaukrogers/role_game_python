@@ -30,6 +30,9 @@ class Game:
             if p.name.upper() == what.upper():
                 message = "You can see the " + what + " from here"
 
+        if what.upper() == self.protagonist.location.name.upper():
+            message = self.protagonist.location.description
+
         # todo: Look at object?
         # Look at enemy?
         possible_enemies = self.protagonist.location.enemies_list
@@ -38,7 +41,17 @@ class Game:
                 if e.is_alive:
                     message = e.description
                 else:
-                    message = "You see a dead " + e.get_name
+                    message = "You see a dead " + e.name
+        return message
+
+    def fight(self, who):
+        message = "There is no " + who + " to kill"
+        enemies = self.protagonist.location.enemies_list
+        for e in enemies:
+            if e.name.upper() == who.upper():
+                e.kill()
+                message = "You just killed the " + who
+                break
         return message
 
     # Play!
@@ -58,11 +71,9 @@ class Game:
                     print(self.protagonist.location.get_full_description())
                 else:
                     print(self.look_at(split_command[1]))
-                    pass
             elif split_command[0] == "GO":
                 if len(split_command) == 1:
                     print("Go where?")
-                    pass
                 else:
                     where = split_command[1]
                     print(self.goto(where))
@@ -70,15 +81,13 @@ class Game:
                 print("searching")
             elif split_command[0] == "FIGHT":
                 if len(split_command) == 1:
-                    # todo: give error message
-                    pass
+                    print("Fight against what?")
                 else:
+                    print(self.fight(split_command[1]))
                     # todo: fight desired enemy if possible
-                    pass
             elif split_command[0] == "PICKUP":
                 if len(split_command) == 1:
-                    # todo: give error message
-                    pass
+                    print("Pickup what?")
                 else:
                     # todo: pickup desired stuff if possible
                     pass
@@ -135,7 +144,6 @@ class Game:
         self.begin_place = None
         self.enemies_array = None
         self.protagonist = None
-
 
 if __name__ == '__main__':
     game = Game()
