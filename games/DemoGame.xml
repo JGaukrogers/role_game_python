@@ -49,6 +49,8 @@
 		<objects>
 			<object name="amulet" description="Amulet that once belonged to a bandit">
 			</object>
+            <shield name="shield" description="Just a lousy shield" defense="3">
+            </shield>
 		</objects>
 	</enemy>
 </game>

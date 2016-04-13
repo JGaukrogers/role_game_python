@@ -41,10 +41,10 @@ class Game:
         for o in self.protagonist.rucksack: # tested
             if o.name.upper() == what.upper():
                 message = o.description
-        if self.protagonist.is_weapon_equipped() and self.protagonist.weaponInHand.upper() == what.upper():
-            message = self.protagonist.weaponInHand.description
-        if self.protagonist.is_shield_equipped() and self.protagonist.shieldInHand.upper() == what.upper():
-            message = self.protagonist.shieldInHand.description
+        if self.protagonist.is_weapon_equipped() and self.protagonist.weaponInHand.name.upper() == what.upper(): # tested
+            message = self.protagonist.weaponInHand.description + ". You have it equipped"
+        if self.protagonist.is_shield_equipped() and self.protagonist.shieldInHand.name.upper() == what.upper():
+            message = self.protagonist.shieldInHand.description + ". You have it equipped"
 
         # Look at enemy?
         possible_enemies = self.protagonist.location.enemies_list
@@ -112,6 +112,27 @@ class Game:
 
         return message
 
+    def equip(self, what):
+        message = "You have no " + what + " to equip"
+        object_list = self.protagonist.rucksack
+        for o in object_list:
+            if o.name.upper() == what.upper():
+                if o.__name__() == 'Weapon':
+                    message = "You just equipped your " + what
+                    self.protagonist.weaponInHand = o
+                    object_list.remove(o)
+                    break
+                elif o.__name__() == 'Shield':
+                    # todo: if something is equipped, remove it first!
+                    message = "You just equipped your " + what
+                    self.protagonist.shieldInHand = o
+                    object_list.remove(o)
+                    break
+                else:
+                    message = "You can't equip " + what
+                    break
+        return message
+
     # Play!
     def play_game(self):
         print("What do you wish to do?")
@@ -151,6 +172,10 @@ class Game:
                     print(self.pickup(split_command[1]))
             elif split_command[0] == "EQUIP":
                 # todo: equip swords and shields
+                if len(split_command) == 1:
+                    print("Equip what?")
+                else:
+                    print(self.equip(split_command[1]))
                 pass
             elif split_command[0] == "EXIT":
                 print("bye")

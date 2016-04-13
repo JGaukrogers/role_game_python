@@ -5,6 +5,7 @@ from place import Place
 from enemy import Enemy
 from objects import Weapon
 from objects import Obj
+from objects import Shield
 
 
 class GameReader:
@@ -57,6 +58,12 @@ class GameReader:
             name = attributes['name']
             description = attributes['description']
             object_list.append(Obj(name, description))
+        for obj in place.iter('shield'):
+            attributes = obj.attrib
+            name = attributes['name']
+            description = attributes['description']
+            defense = int(attributes['defense'])
+            object_list.append(Shield(name, description, defense))
         return object_list
 
     def get_enemy(self, enemy):
