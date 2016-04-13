@@ -75,6 +75,11 @@ class Game:
             else:
                 for o in objects_list:
                     message += "You found a " + o.name + "\n"
+        elif what.upper() == "BACKPACK":
+            objects_list = self.protagonist.rucksack
+            message = "You look in your backpack:"
+            for o in objects_list:
+                message += "\n\tYou have a " + o.name
         else:
             for e in self.protagonist.location.enemies_list:
                 if e.name.upper() == what.upper() and not e.is_alive:
@@ -85,7 +90,7 @@ class Game:
                         for o in objects_list:
                             message += "You found a " + o.name + "\n"
                 else:
-                    message = "You cannot search " + what + "while it is alive!"
+                    message = "You cannot search " + what + " while it is alive!"
             if message == "":
                 message = "Cannot search " + what
         return message
@@ -103,14 +108,13 @@ class Game:
             enemies_list = self.protagonist.location.enemies_list
             for e in enemies_list:
                 if not e.is_alive:
-                    continue
-                objects_list = e.object_list
-                for o in objects_list:
-                    if o.name.upper() == what.upper():
-                        self.protagonist.rucksack.append(o)
-                        objects_list.remove(o)
-                        message = "You just picked up a " + o.name
-                        break
+                    objects_list = e.object_list
+                    for o in objects_list:
+                        if o.name.upper() == what.upper():
+                            self.protagonist.rucksack.append(o)
+                            objects_list.remove(o)
+                            message = "You just picked up a " + o.name
+                            break
         if message == "":
             message = "Cannot pickup " + what
 
@@ -175,7 +179,6 @@ class Game:
                 else:
                     print(self.pickup(split_command[1]))
             elif split_command[0] == "EQUIP":
-                # todo: equip swords and shields
                 if len(split_command) == 1:
                     print("Equip what?")
                 else:
