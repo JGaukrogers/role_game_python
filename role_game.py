@@ -77,13 +77,15 @@ class Game:
                     message += "You found a " + o.name + "\n"
         else:
             for e in self.protagonist.location.enemies_list:
-                if e.name.upper() == what.upper():
+                if e.name.upper() == what.upper() and not e.is_alive:
                     objects_list = e.object_list
                     if len(objects_list) == 0:
                         message = "Found nothing in " + what
                     else:
                         for o in objects_list:
                             message += "You found a " + o.name + "\n"
+                else:
+                    message = "You cannot search " + what + "while it is alive!"
             if message == "":
                 message = "Cannot search " + what
         return message
@@ -100,6 +102,8 @@ class Game:
         if message == "":
             enemies_list = self.protagonist.location.enemies_list
             for e in enemies_list:
+                if not e.is_alive:
+                    continue
                 objects_list = e.object_list
                 for o in objects_list:
                     if o.name.upper() == what.upper():
