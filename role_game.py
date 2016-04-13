@@ -35,10 +35,10 @@ class Game:
 
         # todo: test until end
         possible_objects = self.protagonist.location.objects_list
-        for o in possible_objects:
+        for o in possible_objects: # tested
             if o.name.upper() == what.upper():
                 message = o.description
-        for o in self.protagonist.rucksack:
+        for o in self.protagonist.rucksack: # tested
             if o.name.upper() == what.upper():
                 message = o.description
         if self.protagonist.is_weapon_equipped() and self.protagonist.weaponInHand.upper() == what.upper():
@@ -74,14 +74,22 @@ class Game:
                 message = "Found nothing"
             else:
                 for o in objects_list:
-                    message += "Found a " + o.name + "\n"
+                    message += "You found a " + o.name + "\n"
         else:
-            # todo: search dead enemy
-            message = "To be done: search " + what
+            for e in self.protagonist.location.enemies_list:
+                if e.name.upper() == what.upper():
+                    objects_list = e.object_list
+                    if len(objects_list) == 0:
+                        message = "Found nothing in " + what
+                    else:
+                        for o in objects_list:
+                            message += "You found a " + o.name + "\n"
+            if message == "":
+                message = "Cannot search " + what
         return message
 
     def pickup(self, what):
-        message = "Cannot pickup " + what
+        message = ""
         objects_list = self.protagonist.location.objects_list
         for o in objects_list:
             if o.name.upper() == what.upper():
@@ -89,6 +97,19 @@ class Game:
                 objects_list.remove(o)
                 message = "You just picked up a " + o.name
                 break
+        if message == "":
+            enemies_list = self.protagonist.location.enemies_list
+            for e in enemies_list:
+                objects_list = e.object_list
+                for o in objects_list:
+                    if o.name.upper() == what.upper():
+                        self.protagonist.rucksack.append(o)
+                        objects_list.remove(o)
+                        message = "You just picked up a " + o.name
+                        break
+        if message == "":
+            message = "Cannot pickup " + what
+
         return message
 
     # Play!

@@ -46,5 +46,9 @@
 		<description>It's a tall robust man, with bride shoulders and masked face.</description>
 		<level>1</level>
 		<location>1</location>
+		<objects>
+			<object name="amulet" description="Amulet that once belonged to a bandit">
+			</object>
+		</objects>
 	</enemy>
 </game>

@@ -4,6 +4,7 @@ from constants import Const
 from place import Place
 from enemy import Enemy
 from objects import Weapon
+from objects import Obj
 
 
 class GameReader:
@@ -41,7 +42,7 @@ class GameReader:
         p = Place(place_name, description, place_id, connection_list, object_list)
         return p
 
-    # todo: enhance for general objects and shields
+    # todo: enhance for shields
     @staticmethod
     def get_objects(place):
         object_list = []
@@ -51,6 +52,11 @@ class GameReader:
             description = attributes['description']
             attack = int(attributes['attack'])
             object_list.append(Weapon(name, description, attack))
+        for obj in place.iter('object'):
+            attributes = obj.attrib
+            name = attributes['name']
+            description = attributes['description']
+            object_list.append(Obj(name, description))
         return object_list
 
     def get_enemy(self, enemy):
@@ -58,7 +64,8 @@ class GameReader:
         description = enemy.find(self.CONST.DESCRIPTION_TAG).text
         level = int(enemy.find(self.CONST.LEVEL_TAG).text)
         location = int(enemy.find(self.CONST.LOCATION_TAG).text)
-        return Enemy(name, description, level, location)
+        object_list = self.get_objects(enemy)
+        return Enemy(name, description, level, location, object_list)
 
     def __init__(self):
         self.place_list = []
