@@ -27,6 +27,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cat.judith.stopsmoking.CigaretteCounter" />
         </activity>
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>
