@@ -34,7 +34,6 @@ public class CigarettesSmokedDB extends SQLiteOpenHelper {
         super(context, "cigsSmoked.db", null, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
@@ -42,8 +41,8 @@ public class CigarettesSmokedDB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO: this just discards data and recreates the DB. The old data should be somehow saved.
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
+
 }

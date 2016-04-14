@@ -24,10 +24,12 @@ public class CigaretteCounter extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // TODO: set value of R.id.numCigsText from DB
         numCigsView = (TextView) findViewById(R.id.numCigsText);
 
-        // 1 - Look if DB has entry for today
+//        CigarettesSmokedDB dbHelper = new CigarettesSmokedDB(this.getApplicationContext());
+//        CigarettesSmokedDB.init(this.getApplicationContext());
+
+        // Look if DB has entry for today
         CigarettesSmokedDB dbHelper = new CigarettesSmokedDB(this.getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] projection = {
@@ -55,7 +57,7 @@ public class CigaretteCounter extends AppCompatActivity {
         if( count == 0){
             // Add entry and show to user
             numCigsView.setText("0");
-            writeToDatabase(todaysDate, 0, dbHelper);
+            insertToDatabase(0, dbHelper);
         }
         else{
             //Get entry and show to user
@@ -64,7 +66,6 @@ public class CigaretteCounter extends AppCompatActivity {
             numCigsView.setText(itemId);
         }
         c.close();
-
     }
 
     /*
@@ -93,7 +94,7 @@ public class CigaretteCounter extends AppCompatActivity {
     }
     */
 
-    private void writeToDatabase(int todaysDate, int smoked, CigarettesSmokedDB dbHelper) {
+    private void insertToDatabase(int smoked, CigarettesSmokedDB dbHelper) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
@@ -108,10 +109,28 @@ public class CigaretteCounter extends AppCompatActivity {
                 values);
     }
 
-    // TODO: save new value in DB
+    private void updateToDatabase(int smoked, CigarettesSmokedDB dbHelper) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(CigarettesSmokedDB.COLUMN_NAME_SMOKED, smoked);
+        String[] where = {String.valueOf(todaysDate)};
+
+        // Insert the new row, returning the primary key value of the new row
+        db.update(
+                CigarettesSmokedDB.TABLE_NAME,
+                values,
+                CigarettesSmokedDB.COLUMN_NAME_ENTRY_ID + "=?",
+                where);
+    }
+
     public void addOneCig(View view) {
         String aux = String.valueOf(numCigsView.getText());
-        Integer numCigs = Integer.decode(aux) +1;
-        numCigsView.setText(numCigs.toString());
+        Integer numCigs = Integer.decode(aux) + 1;
+        numCigsView.setText(String.valueOf(numCigs));
+
+        CigarettesSmokedDB dbHelper = new CigarettesSmokedDB(this.getApplicationContext());
+        updateToDatabase(numCigs, dbHelper);
     }
 }
