@@ -1,6 +1,7 @@
 package cat.judith.stopsmoking;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -132,5 +133,10 @@ public class CigaretteCounter extends AppCompatActivity {
 
         CigarettesSmokedDB dbHelper = new CigarettesSmokedDB(this.getApplicationContext());
         updateToDatabase(numCigs, dbHelper);
+    }
+
+    public void seeStatistics(View view) {
+        Intent intent = new Intent(this, SeeStatistics.class);
+        startActivity(intent);
     }
 }
