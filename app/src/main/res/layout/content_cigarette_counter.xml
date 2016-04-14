@@ -11,7 +11,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="cat.judith.stopsmoking.CigaretteCounter"
-    tools:showIn="@layout/activity_cigarette_counter">
+    tools:showIn="@layout/activity_cigarette_counter"
+    android:gravity="center_horizontal">
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,22 +21,29 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/today_you_smoked_textView" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/numCigsText"
-        android:layout_gravity="center_horizontal"
-        android:text="0" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        android:id="@+id/AddButton"
-        android:layout_gravity="center_horizontal"
-        android:onClick="addOneCig" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/numCigsText"
+            android:gravity="center_horizontal"
+            android:text="0" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:id="@+id/AddButton"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="@color/myBlue"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:textSize="@dimen/textSize"
+            android:onClick="addOneCig" />
 
     <TextView
         android:layout_width="wrap_content"
