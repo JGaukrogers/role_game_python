@@ -15,10 +15,11 @@
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="wrap_content"
-        android:layout_height="306dp"
-        android:id="@+id/view"
+        android:layout_height="wrap_content"
+        android:id="@+id/graphView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1" />
 
     <View style="@style/Divider"
         android:layout_marginTop="10dp"
@@ -37,7 +38,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="X € smoked"
-        android:id="@+id/monexSmokedView"
+        android:id="@+id/moneySmokedView"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/textSize"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Z average smoked"
+        android:id="@+id/avgSmokedView"
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/textSize"
         android:layout_marginBottom="10dp"/>
