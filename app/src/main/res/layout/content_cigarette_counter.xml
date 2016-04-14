@@ -19,7 +19,9 @@
         android:layout_height="wrap_content"
         android:text="@string/today_you_smoked"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/today_you_smoked_textView" />
+        android:id="@+id/today_you_smoked_textView"
+        android:textSize="@dimen/textSize"
+        />
 
 
         <EditText
@@ -50,11 +52,60 @@
         android:layout_height="wrap_content"
         android:text="@string/cigarettes"
         android:id="@+id/cigarettesTextView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/textSize"
+        android:layout_marginBottom="10dp" />
 
-    <Space
+    <View style="@style/Divider"/>
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:text="Edit past days"
+        android:id="@+id/edit_days"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="@color/myBlue"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="See statistics"
+        android:id="@+id/see_statistics"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="@color/myBlue"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:id="@+id/settings"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="@color/myBlue"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
 
 </LinearLayout>
