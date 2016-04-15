@@ -1,9 +1,12 @@
 package cat.judith.stopsmoking;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -16,14 +19,16 @@ import java.util.Date;
 
 public class SeeStatistics extends AppCompatActivity {
 
-    //TODO: get from settings
-    private static final double price = 5;
-    private static final int cigsPerPacket = 20;
+    private double price = 5;
+    private int cigsPerPacket = 20;
+    private String currency = "€";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_statistics);
+
+        getSavedPreferences();
 
         TextView cigsSmokedView = (TextView) findViewById(R.id.cigsSmokedView);
         TextView moneySmokedView = (TextView) findViewById(R.id.moneySmokedView);
@@ -45,6 +50,16 @@ public class SeeStatistics extends AppCompatActivity {
         graph.getGridLabelRenderer().setVerticalAxisTitle("Cigarettes Smoked");
         graph.getGridLabelRenderer().setNumHorizontalLabels(3);
 
+    }
+
+    private void getSavedPreferences(){
+        // todo: get float direcly
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(Settings.PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+        //int iPrice = sharedPref.getInt(Settings.PREFERENCE_PRICE, 5);
+        //price = iPrice;
+        price = sharedPref.getFloat(Settings.PREFERENCE_PRICE, 5f);
+        cigsPerPacket = sharedPref.getInt(Settings.PREFERENCE_NUM_CIGARETTES, 20);
+        currency = sharedPref.getString(Settings.PREFERENCE_CURRENCY, "€");
     }
 
     private int getTotalCigarettesSmoked() {
