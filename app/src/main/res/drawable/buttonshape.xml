@@ -17,6 +17,6 @@
 
     <stroke
         android:width="3dp"
-        android:color="@color/myBlue"
+        android:color="@color/myLightBlue"
         />
 </shape> 
