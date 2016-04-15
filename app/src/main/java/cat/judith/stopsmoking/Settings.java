@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-//TODO: fix bug where settings are saved in the wrong id's (?) or are shown in the wrong element (???)
 public class Settings extends AppCompatActivity {
 
     public static final String PREFERENCES_FILE_NAME = "preferences";
@@ -84,16 +83,13 @@ public class Settings extends AppCompatActivity {
     }
 
     private void getSavedPreferences(){
-        // todo: get float direcly
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(Settings.PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
-        //int sFloat = sharedPref.getInt(Settings.PREFERENCE_PRICE, 5);
-        //float price = sFloat;
         float price = sharedPref.getFloat(Settings.PREFERENCE_PRICE, 5f);
         int cigsPerPacket = sharedPref.getInt(Settings.PREFERENCE_NUM_CIGARETTES, 20);
         String currency = sharedPref.getString(Settings.PREFERENCE_CURRENCY, "€");
 
-        cigsPerPacketText.setText(String.valueOf(price));
-        priceText.setText(String.valueOf(cigsPerPacket));
+        cigsPerPacketText.setText(String.valueOf(cigsPerPacket));
+        priceText.setText(String.valueOf(price));
 
         String[] aux = getResources().getStringArray(R.array.currencies_list);
         for (int i = 0; i < aux.length; i++) {

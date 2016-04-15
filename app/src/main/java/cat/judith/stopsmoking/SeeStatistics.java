@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
@@ -36,7 +35,7 @@ public class SeeStatistics extends AppCompatActivity {
 
         int totalCigsSmoked = getTotalCigarettesSmoked();
         cigsSmokedView.setText(totalCigsSmoked + " cigarettes smoked");
-        moneySmokedView.setText(getTotalMoneySmoked(totalCigsSmoked) + " € smoked");
+        moneySmokedView.setText(getTotalMoneySmoked(totalCigsSmoked) + " " + currency +" smoked");
         averageSmokedView.setText(getAverageCigarettesSmoked(totalCigsSmoked) + " cigarettes/day smoked");
 
         // Init. and set graph
@@ -52,11 +51,9 @@ public class SeeStatistics extends AppCompatActivity {
 
     }
 
+    // todo: why doesn't this read the selected currency properly?
     private void getSavedPreferences(){
-        // todo: get float direcly
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(Settings.PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
-        //int iPrice = sharedPref.getInt(Settings.PREFERENCE_PRICE, 5);
-        //price = iPrice;
         price = sharedPref.getFloat(Settings.PREFERENCE_PRICE, 5f);
         cigsPerPacket = sharedPref.getInt(Settings.PREFERENCE_NUM_CIGARETTES, 20);
         currency = sharedPref.getString(Settings.PREFERENCE_CURRENCY, "€");
