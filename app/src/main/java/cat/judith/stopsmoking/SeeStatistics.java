@@ -34,9 +34,9 @@ public class SeeStatistics extends AppCompatActivity {
         TextView averageSmokedView = (TextView) findViewById(R.id.avgSmokedView);
 
         int totalCigsSmoked = getTotalCigarettesSmoked();
-        cigsSmokedView.setText(totalCigsSmoked + " cigarettes smoked");
-        moneySmokedView.setText(getTotalMoneySmoked(totalCigsSmoked) + " " + currency +" smoked");
-        averageSmokedView.setText(getAverageCigarettesSmoked(totalCigsSmoked) + " cigarettes/day smoked");
+        cigsSmokedView.setText(totalCigsSmoked + getString(R.string.cigarettesSmoked));
+        moneySmokedView.setText(getTotalMoneySmoked(totalCigsSmoked) + getString(R.string.singleSpace) + currency +getString(R.string.smoked));
+        averageSmokedView.setText(getAverageCigarettesSmoked(totalCigsSmoked) + getString(R.string.cigarettesPerDay));
 
         // Init. and set graph
         GraphView graph = (GraphView) findViewById(R.id.graphView);
@@ -93,10 +93,13 @@ public class SeeStatistics extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         Cursor c = db.rawQuery(CigarettesSmokedDB.SQL_GET_DAYS_SMOKED, null);
-        if(c.moveToFirst())
+        if(c.moveToFirst()) {
             sum_days_smoked = c.getInt(0);
-        else
+        }
+        else {
             sum_days_smoked = -1;
+        }
+        c.close();
         db.close();
 
         return sum_days_smoked;
@@ -128,7 +131,7 @@ public class SeeStatistics extends AppCompatActivity {
             dataPointArray[i] = dpAux;
             c.moveToNext();
         }
-
+        c.close();
         BarGraphSeries<DataPoint> graphCigsDay = new BarGraphSeries<>(dataPointArray);
         graphCigsDay.setSpacing(20);
 
@@ -141,9 +144,8 @@ public class SeeStatistics extends AppCompatActivity {
         int year = (iDate / 10000) - 1900;
         int month = ((iDate / 100) % 100) - 1;
         int day = iDate % 100;
-        Date date = new Date(year, month, day);
 
-        return date;
+        return new Date(year, month, day);
 
     }
 

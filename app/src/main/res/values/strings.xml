@@ -5,6 +5,10 @@
     <string name="cigarettes">cigarettes</string>
     <string name="title_activity_see_statistics">See Statistics</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="cigarettesPerDay">" cigarettes/day smoked"</string>
+    <string name="smoked">" smoked"</string>
+    <string name="singleSpace">" "</string>
+    <string name="cigarettesSmoked">" cigarettes smoked"</string>
 
     <string-array name="currencies_list">
         <item>€</item>
