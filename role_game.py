@@ -3,11 +3,11 @@
 from game_reader import GameReader
 # from place import Place
 from protagonist import Protagonist
+
 GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT", "EXIT", "PICKUP", "EQUIP"]
 
 
 class Game:
-
     @staticmethod
     def print_commands():
         for s in sorted(GAME_COMMANDS):
@@ -34,10 +34,10 @@ class Game:
             message = self.protagonist.location.description
 
         possible_objects = self.protagonist.location.objects_list
-        for o in possible_objects: # tested
+        for o in possible_objects:  # tested
             if o.name.upper() == what.upper():
                 message = o.description
-        for o in self.protagonist.rucksack: # tested
+        for o in self.protagonist.rucksack:  # tested
             if o.name.upper() == what.upper():
                 message = o.description
         if self.protagonist.is_weapon_equipped() and self.protagonist.weaponInHand.name.upper() == what.upper():
@@ -79,21 +79,19 @@ class Game:
             message = "You look in your backpack:"
             if len(objects_list) > 0:
                 for o in objects_list:
-                    # todo: bug found. If you had something in backpack, but removed it, error occurs:
-                    # AttributeError: 'NoneType' object has no attribute 'name'
                     message += "\n\tYou have a " + o.name
         else:
-            # todo: bug found. "Cannot search rucksack while it is alive"
             for e in self.protagonist.location.enemies_list:
-                if e.name.upper() == what.upper() and not e.is_alive:
-                    objects_list = e.object_list
-                    if len(objects_list) == 0:
-                        message = "Found nothing in " + what
+                if e.name.upper() == what.upper():
+                    if not e.is_alive:
+                        objects_list = e.object_list
+                        if len(objects_list) == 0:
+                            message = "Found nothing in " + what
+                        else:
+                            for o in objects_list:
+                                message += "You found a " + o.name + "\n"
                     else:
-                        for o in objects_list:
-                            message += "You found a " + o.name + "\n"
-                else:
-                    message = "You cannot search " + what + " while it is alive!"
+                        message = "You cannot search " + what + " while it is alive!"
             if message == "":
                 message = "Cannot search " + what
         return message
@@ -131,7 +129,7 @@ class Game:
                 if o.__name__() == 'Weapon':
                     # todo: test
                     message = "You equipped your " + what
-                    if self.protagonist.is_weapon_equipped:
+                    if self.protagonist.weaponInHand is not None:
                         object_list.append(self.protagonist.weaponInHand)
                     self.protagonist.weaponInHand = o
                     object_list.remove(o)
@@ -139,7 +137,7 @@ class Game:
                 elif o.__name__() == 'Shield':
                     # todo: test
                     message = "You equipped your " + what
-                    if self.protagonist.is_shield_equipped:
+                    if self.protagonist.shieldInHand is not None:
                         object_list.append(self.protagonist.shieldInHand)
                     self.protagonist.shieldInHand = o
                     object_list.remove(o)
@@ -204,7 +202,7 @@ class Game:
         gr = GameReader()
         gr.parse_game(path)
 
-        # 1 - places fertig einrichten (liste mit places geben, bisher haben wir nur id's)
+        # 1 - Properly connect places (now we have only ids)
         # We need the places to be in order
         self.places_array = sorted(gr.place_list, key=lambda place: place.id)
 
@@ -214,12 +212,12 @@ class Game:
             for j in connection_ids:
                 p.add_path(self.places_array[j])
 
-        # 2 - feinde zu den places weitergeben
+        # 2 - Place enemies to places
         self.enemies_array = gr.enemy_list
         for enemy in self.enemies_array:
             self.places_array[enemy.location].add_enemy(enemy)
 
-        # 3 - temporaer protagonist erzeugen. In der zukunft soll es auch gelesen werden
+        # 3 - Temporally make protagonist. In the future it also should be readen
         self.protagonist = Protagonist("Cris", "Cris is a demo warrior")
         self.protagonist.location = self.begin_place
 
