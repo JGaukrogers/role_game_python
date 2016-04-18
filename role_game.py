@@ -33,7 +33,6 @@ class Game:
         if what.upper() == self.protagonist.location.name.upper():
             message = self.protagonist.location.description
 
-        # todo: test until end
         possible_objects = self.protagonist.location.objects_list
         for o in possible_objects: # tested
             if o.name.upper() == what.upper():
@@ -41,7 +40,7 @@ class Game:
         for o in self.protagonist.rucksack: # tested
             if o.name.upper() == what.upper():
                 message = o.description
-        if self.protagonist.is_weapon_equipped() and self.protagonist.weaponInHand.name.upper() == what.upper(): # tested
+        if self.protagonist.is_weapon_equipped() and self.protagonist.weaponInHand.name.upper() == what.upper():
             message = self.protagonist.weaponInHand.description + ". You have it equipped"
         if self.protagonist.is_shield_equipped() and self.protagonist.shieldInHand.name.upper() == what.upper():
             message = self.protagonist.shieldInHand.description + ". You have it equipped"
@@ -78,9 +77,13 @@ class Game:
         elif what.upper() == "BACKPACK":
             objects_list = self.protagonist.rucksack
             message = "You look in your backpack:"
-            for o in objects_list:
-                message += "\n\tYou have a " + o.name
+            if len(objects_list) > 0:
+                for o in objects_list:
+                    # todo: bug found. If you had something in backpack, but removed it, error occurs:
+                    # AttributeError: 'NoneType' object has no attribute 'name'
+                    message += "\n\tYou have a " + o.name
         else:
+            # todo: bug found. "Cannot search rucksack while it is alive"
             for e in self.protagonist.location.enemies_list:
                 if e.name.upper() == what.upper() and not e.is_alive:
                     objects_list = e.object_list
@@ -126,13 +129,18 @@ class Game:
         for o in object_list:
             if o.name.upper() == what.upper():
                 if o.__name__() == 'Weapon':
-                    message = "You just equipped your " + what
+                    # todo: test
+                    message = "You equipped your " + what
+                    if self.protagonist.is_weapon_equipped:
+                        object_list.append(self.protagonist.weaponInHand)
                     self.protagonist.weaponInHand = o
                     object_list.remove(o)
                     break
                 elif o.__name__() == 'Shield':
-                    # todo: if something is equipped, remove it first!
-                    message = "You just equipped your " + what
+                    # todo: test
+                    message = "You equipped your " + what
+                    if self.protagonist.is_shield_equipped:
+                        object_list.append(self.protagonist.shieldInHand)
                     self.protagonist.shieldInHand = o
                     object_list.remove(o)
                     break

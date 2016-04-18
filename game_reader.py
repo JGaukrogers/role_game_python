@@ -43,7 +43,6 @@ class GameReader:
         p = Place(place_name, description, place_id, connection_list, object_list)
         return p
 
-    # todo: enhance for shields
     @staticmethod
     def get_objects(place):
         object_list = []
