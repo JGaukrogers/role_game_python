@@ -65,7 +65,7 @@ class Game:
 
     def search(self, what=None):
         message = ""
-        if what is None:
+        if what is None or what.upper() == self.protagonist.location.name.upper():
             objects_list = self.protagonist.location.objects_list
             if len(objects_list) == 0:
                 message = "Found nothing"
@@ -101,7 +101,7 @@ class Game:
             if o.name.upper() == what.upper():
                 self.protagonist.rucksack.append(o)
                 objects_list.remove(o)
-                message = "You just picked up a " + o.name
+                message = "You just picked up a " + what
                 break
         if message == "":
             enemies_list = self.protagonist.location.enemies_list
@@ -112,13 +112,14 @@ class Game:
                         if o.name.upper() == what.upper():
                             self.protagonist.rucksack.append(o)
                             objects_list.remove(o)
-                            message = "You just picked up a " + o.name
+                            message = "You just picked up a " + what
                             break
         if message == "":
             message = "Cannot pickup " + what
 
         return message
 
+    # Add case: user tries to equip already equipped item
     def equip(self, what):
         message = "You have no " + what + " to equip"
         object_list = self.protagonist.rucksack

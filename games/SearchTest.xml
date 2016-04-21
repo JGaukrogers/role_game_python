@@ -7,12 +7,9 @@
 		<description>It is a nice forest.</description>
 		<connections>
 			<connection>1</connection>
-			<connection>2</connection>
 		</connections>
         <objects>
 			<weapon name="sword" description="Just a lousy sword" attack="3">
-			</weapon>
-            <weapon name="sword2" description="Another sword" attack="3">
 			</weapon>
             <object name="amulet" description="Pretty amulet">
 			</object>
@@ -21,28 +18,11 @@
 		</objects>
 	</place>
 	<place>
-		<name>Town-Planes</name>
-		<id>1</id>
-		<description>You are in the Town planes.</description>
-		<connections>
-			<connection>0</connection>
-            <connection>3</connection>
-		</connections>
-	</place>
-	<place>
 		<name>Sea</name>
-		<id>2</id>
+		<id>1</id>
 		<description>You can see the sea in front of you.</description>
 		<connections>
 			<connection>0</connection>
-		</connections>
-	</place>
-    <place>
-		<name>Town</name>
-		<id>3</id>
-		<description>You are in the Town.</description>
-		<connections>
-			<connection>1</connection>
 		</connections>
 	</place>
 
