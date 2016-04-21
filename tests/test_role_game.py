@@ -313,3 +313,29 @@ def test_equip_nothing():
     assert game.equip("sword+3") == "You have no sword+3 to equip"
 
 # FIGHT
+
+
+def test_fight_basic():
+    game = Game()
+    game.load("games/FightTest.xml")
+    assert game.fight("enemy1") == "You just killed the enemy1"
+
+
+def test_fight_dead_enemy():
+    game = Game()
+    game.load("games/FightTest.xml")
+    game.fight("enemy1")
+    assert game.fight("enemy1") == "enemy1 is already dead"
+
+
+def test_fight_enemy_in_other_place():
+    game = Game()
+    game.load("games/FightTest.xml")
+    game.fight("enemy3")
+    assert game.fight("enemy3") == "There is no enemy3 to fight"
+
+
+def test_fight_basic_fail():
+    game = Game()
+    game.load("games/FightTest.xml")
+    assert game.fight("nonexistent") == "There is no nonexistent to fight"

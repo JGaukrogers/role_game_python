@@ -58,8 +58,11 @@ class Game:
         enemies = self.protagonist.location.enemies_list
         for e in enemies:
             if e.name.upper() == who.upper():
-                e.kill()
-                message = "You just killed the " + who
+                if e.is_alive:
+                    e.kill()
+                    message = "You just killed the " + who
+                else:
+                    message = who + " is already dead"
                 break
         return message
 
