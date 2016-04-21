@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<game>
+	<place>
+		<name>Forest</name>
+		<id>0</id>
+		<description>It is a nice forest.</description>
+		<connections>
+			<connection>1</connection>
+			<connection>2</connection>
+		</connections>
+        <objects>
+			<weapon name="sword" description="Just a lousy sword" attack="3">
+			</weapon>
+            <object name="amulet" description="Pretty amulet">
+			</object>
+            <shield name="shield" description="Just a lousy shield" defense="3">
+            </shield>
+		</objects>
+	</place>
+	<place>
+		<name>Town-Planes</name>
+		<id>1</id>
+		<description>You are in the Town planes.</description>
+		<connections>
+			<connection>0</connection>
+            <connection>3</connection>
+		</connections>
+	</place>
+	<place>
+		<name>Sea</name>
+		<id>2</id>
+		<description>You can see the sea in front of you.</description>
+		<connections>
+			<connection>0</connection>
+		</connections>
+	</place>
+    <place>
+		<name>Town</name>
+		<id>3</id>
+		<description>You are in the Town.</description>
+		<connections>
+			<connection>1</connection>
+		</connections>
+	</place>
+
+
+	<enemy>
+		<name>Enemy1</name>
+		<description>Description e1</description>
+		<level>1</level>
+		<location>0</location>
+		<objects>
+			<object name="amulet" description="Amulet that once belonged to a bandit">
+			</object>
+            <shield name="shield" description="Just a lousy shield" defense="3">
+            </shield>
+		</objects>
+	</enemy>
+    <enemy>
+		<name>Enemy 2</name>
+		<description>Description e1</description>
+		<level>1</level>
+		<location>0</location>
+		<objects>
+		</objects>
+	</enemy>
+</game>

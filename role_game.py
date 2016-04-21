@@ -1,5 +1,3 @@
-#!/usr/bin/env python3.4
-
 from game_reader import GameReader
 # from place import Place
 from protagonist import Protagonist
@@ -40,9 +38,9 @@ class Game:
         for o in self.protagonist.rucksack:  # tested
             if o.name.upper() == what.upper():
                 message = o.description
-        if self.protagonist.is_weapon_equipped() and self.protagonist.weaponInHand.name.upper() == what.upper():
+        if self.protagonist.weaponInHand is not None and self.protagonist.weaponInHand.name.upper() == what.upper():
             message = self.protagonist.weaponInHand.description + ". You have it equipped"
-        if self.protagonist.is_shield_equipped() and self.protagonist.shieldInHand.name.upper() == what.upper():
+        if self.protagonist.shieldInHand is not None and self.protagonist.shieldInHand.name.upper() == what.upper():
             message = self.protagonist.shieldInHand.description + ". You have it equipped"
 
         # Look at enemy?
