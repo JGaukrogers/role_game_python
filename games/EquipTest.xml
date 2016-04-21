@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<game>
+	<place>
+		<name>Forest</name>
+		<id>0</id>
+		<description>It is a nice forest.</description>
+        <objects>
+			<weapon name="sword+1" description="Just a lousy sword+1" attack="1">
+			</weapon>
+            <weapon name="sword+2" description="Just a lousy sword+2" attack="2">
+			</weapon>
+            <shield name="shield+1" description="Just a lousy shield+1" defense="1">
+            </shield>
+            <shield name="shield+2" description="Just a lousy shield+2" defense="2">
+            </shield>
+            <object name="amulet" description="A pretty amulet">
+			</object>
+		</objects>
+	</place>
+
+
+	<enemy>
+		<name>Enemy1</name>
+		<description>Description e1</description>
+		<level>1</level>
+		<location>0</location>
+		<objects>
+			<weapon name="sword+3" description="Just a lousy sword+3" attack="3">
+			</weapon>
+		</objects>
+	</enemy>
+</game>

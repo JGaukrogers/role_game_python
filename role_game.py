@@ -126,7 +126,6 @@ class Game:
         for o in object_list:
             if o.name.upper() == what.upper():
                 if o.__name__() == 'Weapon':
-                    # todo: test
                     message = "You equipped your " + what
                     if self.protagonist.weaponInHand is not None:
                         object_list.append(self.protagonist.weaponInHand)
@@ -134,7 +133,6 @@ class Game:
                     object_list.remove(o)
                     break
                 elif o.__name__() == 'Shield':
-                    # todo: test
                     message = "You equipped your " + what
                     if self.protagonist.shieldInHand is not None:
                         object_list.append(self.protagonist.shieldInHand)
