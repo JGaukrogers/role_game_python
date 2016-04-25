@@ -294,6 +294,22 @@ def test_reequip_shield():
     assert game.search("backpack") == message
 
 
+def test_equip_equipped_weapon():
+    game = Game()
+    game.load("games/EquipTest.xml")
+    game.pickup("sword+1")
+    game.equip("sword+1")
+    assert game.equip("sword+1") == "sword+1 is already equipped"
+
+
+def test_equip_equipped_shield():
+    game = Game()
+    game.load("games/EquipTest.xml")
+    game.pickup("shield+1")
+    game.equip("shield+1")
+    assert game.equip("shield+1") == "shield+1 is already equipped"
+
+
 def test_equip_fail():
     game = Game()
     game.load("games/EquipTest.xml")

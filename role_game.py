@@ -32,10 +32,10 @@ class Game:
             message = self.protagonist.location.description
 
         possible_objects = self.protagonist.location.objects_list
-        for o in possible_objects:  # tested
+        for o in possible_objects:
             if o.name.upper() == what.upper():
                 message = o.description
-        for o in self.protagonist.rucksack:  # tested
+        for o in self.protagonist.rucksack:
             if o.name.upper() == what.upper():
                 message = o.description
         if self.protagonist.weaponInHand is not None and self.protagonist.weaponInHand.name.upper() == what.upper():
@@ -126,6 +126,10 @@ class Game:
     def equip(self, what):
         message = "You have no " + what + " to equip"
         object_list = self.protagonist.rucksack
+        if self.protagonist.shieldInHand is not None and self.protagonist.shieldInHand.name.upper() == what.upper():
+            message = what + " is already equipped"
+        if self.protagonist.weaponInHand is not None and self.protagonist.weaponInHand.name.upper() == what.upper():
+            message = what + " is already equipped"
         for o in object_list:
             if o.name.upper() == what.upper():
                 if o.__name__() == 'Weapon':
