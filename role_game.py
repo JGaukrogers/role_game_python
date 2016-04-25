@@ -122,7 +122,6 @@ class Game:
 
         return message
 
-    # Add case: user tries to equip already equipped item
     def equip(self, what):
         message = "You have no " + what + " to equip"
         object_list = self.protagonist.rucksack
