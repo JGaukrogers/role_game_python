@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 
 from constants import Const
 from place import Place
-from enemy import Enemy
+from character import Enemy
 from objects import Weapon
 from objects import Obj
 from objects import Shield

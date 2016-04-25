@@ -1,6 +1,6 @@
 from game_reader import GameReader
 # from place import Place
-from protagonist import Protagonist
+from character import Protagonist
 
 GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT", "EXIT", "PICKUP", "EQUIP"]
 
