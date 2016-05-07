@@ -1,4 +1,4 @@
-class Obj:
+class Item:
 
     def __init__(self, name, description):
         self.name = name
@@ -8,20 +8,20 @@ class Obj:
         return "Obj"
 
 
-class Weapon (Obj):
+class Weapon (Item):
 
     def __init__(self, name, description, attack):
-        Obj.__init__(self, name, description)
+        Item.__init__(self, name, description)
         self.attack = attack
 
     def __name__(self):
         return "Weapon"
 
 
-class Shield(Obj):
+class Shield(Item):
 
     def __init__(self, name, description, defense):
-        Obj.__init__(self, name, description)
+        Item.__init__(self, name, description)
         self.defense = defense
 
     def __name__(self):

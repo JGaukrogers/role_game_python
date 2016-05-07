@@ -4,7 +4,7 @@ from constants import Const
 from place import Place
 from character import Enemy
 from objects import Weapon
-from objects import Obj
+from objects import Item
 from objects import Shield
 
 
@@ -56,7 +56,7 @@ class GameReader:
             attributes = obj.attrib
             name = attributes['name']
             description = attributes['description']
-            object_list.append(Obj(name, description))
+            object_list.append(Item(name, description))
         for obj in place.iter('shield'):
             attributes = obj.attrib
             name = attributes['name']
