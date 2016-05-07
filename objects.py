@@ -5,7 +5,7 @@ class Item:
         self.description = description
 
     def __name__(self):
-        return "Obj"
+        return "Item"
 
 
 class Weapon (Item):
