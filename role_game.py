@@ -1,5 +1,6 @@
+import os
+
 from game_reader import GameReader
-# from place import Place
 from character import Protagonist
 
 GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT", "EXIT", "PICKUP", "EQUIP"]
@@ -200,8 +201,6 @@ class Game:
 
     # Loads a game
     def load(self, path):
-        #    tree = ET.parse(path)
-        #    root = tree.getroot()
         gr = GameReader()
         gr.parse_game(path)
 
@@ -235,8 +234,11 @@ class Game:
             split_command[0] = split_command[0].upper()
             if split_command[0] == "LOAD":
                 if len(split_command) == 2:
-                    self.load(split_command[1])
-                    return True
+                    try:
+                        self.load(split_command[1])
+                        return True
+                    except IOError:
+                        print("File " + split_command[1] + " doesn't seem to exist")
                 else:
                     print("Error occurred: syntax must be \"load $GAME_DIR\"")
         return False

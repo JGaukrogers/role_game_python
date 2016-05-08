@@ -10,12 +10,6 @@ from objects import Shield
 
 class GameReader:
 
-    # tree = ET.parse(path)
-    # root = tree.getroot()
-    # For testing purposes
-    # for place in root.iter('place'):
-        # print(place.find('name').text)
-
     def parse_game(self, file):
         tree = ET.parse(file)
         root = tree.getroot()
@@ -23,10 +17,6 @@ class GameReader:
         # Get all places
         for place in root.iter('place'):
             self.place_list.append(self.get_place(place))
-
-        # Get all monsters
-        # for enemy in root.iter('enemy'):
-        #     self.enemy_list.append(self.get_enemy(enemy))
 
     def get_place(self, place):
         place_name = place.find(self.CONST.NAME_TAG).text
