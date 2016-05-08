@@ -16,6 +16,24 @@
             <shield name="shield" description="Just a lousy shield" defense="3">
             </shield>
 		</objects>
+		<enemies>
+            <enemy>
+                <name>Enemy1</name>
+                <description>Description e1</description>
+                <level>1</level>
+                <objects>
+                    <object name="ring" description="Ring that once belonged to a bandit">
+                    </object>
+                </objects>
+            </enemy>
+            <enemy>
+                <name>Enemy2</name>
+                <description>Description e1</description>
+                <level>1</level>
+                <objects>
+                </objects>
+            </enemy>
+		</enemies>
 	</place>
 	<place>
 		<name>Sea</name>
@@ -25,24 +43,4 @@
 			<connection>0</connection>
 		</connections>
 	</place>
-
-
-	<enemy>
-		<name>Enemy1</name>
-		<description>Description e1</description>
-		<level>1</level>
-		<location>0</location>
-		<objects>
-			<object name="ring" description="Ring that once belonged to a bandit">
-			</object>
-		</objects>
-	</enemy>
-    <enemy>
-		<name>Enemy2</name>
-		<description>Description e1</description>
-		<level>1</level>
-		<location>0</location>
-		<objects>
-		</objects>
-	</enemy>
 </game>

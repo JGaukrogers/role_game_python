@@ -8,6 +8,18 @@
 		<connections>
 			<connection>1</connection>
 		</connections>
+        <enemies>
+			<enemy>
+				<name>Enemy1</name>
+				<description>Description e1</description>
+				<level>1</level>
+			</enemy>
+			<enemy>
+				<name>Enemy2</name>
+				<description>Description e2</description>
+				<level>1</level>
+			</enemy>
+		</enemies>
 	</place>
 	<place>
 		<name>Sea</name>
@@ -16,25 +28,12 @@
 		<connections>
 			<connection>0</connection>
 		</connections>
+		<enemies>
+			<enemy>
+                <name>Enemy3</name>
+                <description>Description e3</description>
+                <level>1</level>
+            </enemy>
+		</enemies>
 	</place>
-
-
-	<enemy>
-		<name>Enemy1</name>
-		<description>Description e1</description>
-		<level>1</level>
-		<location>0</location>
-	</enemy>
-    <enemy>
-		<name>Enemy2</name>
-		<description>Description e2</description>
-		<level>1</level>
-		<location>0</location>
-	</enemy>
-    <enemy>
-		<name>Enemy3</name>
-		<description>Description e3</description>
-		<level>1</level>
-		<location>1</location>
-	</enemy>
 </game>

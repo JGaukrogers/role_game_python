@@ -17,17 +17,17 @@
             <object name="amulet" description="A pretty amulet">
 			</object>
 		</objects>
+		<enemies>
+			<enemy>
+				<name>Enemy1</name>
+				<description>Description e1</description>
+				<level>1</level>
+				<location>0</location>
+				<objects>
+					<weapon name="sword+3" description="Just a lousy sword+3" attack="3">
+					</weapon>
+				</objects>
+			</enemy>
+		</enemies>
 	</place>
-
-
-	<enemy>
-		<name>Enemy1</name>
-		<description>Description e1</description>
-		<level>1</level>
-		<location>0</location>
-		<objects>
-			<weapon name="sword+3" description="Just a lousy sword+3" attack="3">
-			</weapon>
-		</objects>
-	</enemy>
 </game>

@@ -18,6 +18,19 @@
 			<connection>0</connection>
 			<connection>3</connection>
 		</connections>
+		<enemies>
+            <enemy>
+                <name>Bandit</name>
+                <description>It's a tall robust man, with bride shoulders and masked face.</description>
+                <level>1</level>
+                <objects>
+                    <object name="amulet" description="Amulet that once belonged to a bandit">
+                    </object>
+                    <shield name="shield" description="Just a lousy shield" defense="3">
+                    </shield>
+                </objects>
+            </enemy>
+        </enemies>
 	</place>
 	<place>
 		<name>Sea</name>
@@ -40,7 +53,7 @@
 		</connections>
 	</place>
 
-
+<!--
 	<enemy>
 		<name>Bandit</name>
 		<description>It's a tall robust man, with bride shoulders and masked face.</description>
@@ -53,4 +66,5 @@
             </shield>
 		</objects>
 	</enemy>
+	-->
 </game>

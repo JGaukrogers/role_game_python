@@ -25,8 +25,8 @@ class GameReader:
             self.place_list.append(self.get_place(place))
 
         # Get all monsters
-        for enemy in root.iter('enemy'):
-            self.enemy_list.append(self.get_enemy(enemy))
+        # for enemy in root.iter('enemy'):
+        #     self.enemy_list.append(self.get_enemy(enemy))
 
     def get_place(self, place):
         place_name = place.find(self.CONST.NAME_TAG).text
@@ -38,9 +38,16 @@ class GameReader:
             aux = int(connection.text)
             connection_list.append(aux)
 
-        object_list = self.get_objects(place)
+        objects = place.find('objects')
+        if objects is not None:
+            object_list = self.get_objects(objects)
+        else:
+            object_list = []
+        enemy_list = []
+        for enemy in place.iter('enemy'):
+            enemy_list.append(self.get_enemy(enemy))
 
-        p = Place(place_name, description, place_id, connection_list, object_list)
+        p = Place(place_name, description, place_id, connection_list, object_list, enemy_list)
         return p
 
     @staticmethod
@@ -69,9 +76,9 @@ class GameReader:
         name = enemy.find(self.CONST.NAME_TAG).text
         description = enemy.find(self.CONST.DESCRIPTION_TAG).text
         level = int(enemy.find(self.CONST.LEVEL_TAG).text)
-        location = int(enemy.find(self.CONST.LOCATION_TAG).text)
+        # location = int(enemy.find(self.CONST.LOCATION_TAG).text)
         object_list = self.get_objects(enemy)
-        return Enemy(name, description, level, location, object_list)
+        return Enemy(name, description, level, object_list)
 
     def __init__(self):
         self.place_list = []
