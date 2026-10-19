@@ -1,20 +1,28 @@
 import xml.etree.ElementTree as ET
+from enum import Enum
 
 from .character import Enemy
-from .constants import Const
 from .items import Item, Shield, Weapon
 from .place import Place
 
 
+class TagType(Enum):
+    PLACE = 'place'
+    MONSTERS = 'enemy'
+    NAME = 'name'
+    LEVEL = 'level'
+    DESCRIPTION = 'description'
+    LOCATION = 'location'
+    WEAPON = 'weapon'
+    ID = 'id'
+
 class GameReader:
     place_list: list[Place]
     enemy_list: list[Enemy]
-    CONST: Const
 
     def __init__(self) -> None:
         self.place_list = []
         self.enemy_list = []
-        self.CONST = Const()
 
     def parse_game(self, file: str) -> None:
         tree = ET.parse(file)
@@ -25,9 +33,9 @@ class GameReader:
             self.place_list.append(self.get_place(place))
 
     def get_place(self, place: ET.Element[str]) -> Place:
-        place_name = place.find(self.CONST.NAME_TAG).text
-        description = place.find(self.CONST.DESCRIPTION_TAG).text
-        place_id = int(place.find('id').text)
+        place_name = place.find(TagType.NAME.value).text
+        description = place.find(TagType.DESCRIPTION.value).text
+        place_id = int(place.find(TagType.ID.value).text)
 
         connection_list = []
         for connection in place.iter('connection'):
@@ -65,9 +73,9 @@ class GameReader:
         return object_list
 
     def get_enemy(self, enemy: ET.Element[str]) -> Enemy:
-        name = enemy.find(self.CONST.NAME_TAG).text
-        description = enemy.find(self.CONST.DESCRIPTION_TAG).text
-        level = int(enemy.find(self.CONST.LEVEL_TAG).text)
+        name = enemy.find(TagType.NAME.value).text
+        description = enemy.find(TagType.DESCRIPTION.value).text
+        level = int(enemy.find(TagType.LEVEL.value).text)
         # location = int(enemy.find(self.CONST.LOCATION_TAG).text)
         object_list = self.get_objects(enemy)
         return Enemy(name, description, level, object_list)
