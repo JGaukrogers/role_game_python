@@ -7,8 +7,16 @@ from .place import Place
 
 
 class GameReader:
+    place_list: list[Place]
+    enemy_list: list[Enemy]
+    CONST: Const
 
-    def parse_game(self, file):
+    def __init__(self) -> None:
+        self.place_list = []
+        self.enemy_list = []
+        self.CONST = Const()
+
+    def parse_game(self, file: str) -> None:
         tree = ET.parse(file)
         root = tree.getroot()
 
@@ -16,7 +24,7 @@ class GameReader:
         for place in root.iter('place'):
             self.place_list.append(self.get_place(place))
 
-    def get_place(self, place):
+    def get_place(self, place: ET.Element[str]) -> Place:
         place_name = place.find(self.CONST.NAME_TAG).text
         description = place.find(self.CONST.DESCRIPTION_TAG).text
         place_id = int(place.find('id').text)
@@ -35,7 +43,7 @@ class GameReader:
         return Place(place_name, description, place_id, connection_list, object_list, enemy_list)
 
     @staticmethod
-    def get_objects(place):
+    def get_objects(place: ET.Element[str]) -> list[Item]:
         object_list = []
         for obj in place.iter('weapon'):
             attributes = obj.attrib
@@ -56,15 +64,10 @@ class GameReader:
             object_list.append(Shield(name, description, defense))
         return object_list
 
-    def get_enemy(self, enemy):
+    def get_enemy(self, enemy: ET.Element[str]) -> Enemy:
         name = enemy.find(self.CONST.NAME_TAG).text
         description = enemy.find(self.CONST.DESCRIPTION_TAG).text
         level = int(enemy.find(self.CONST.LEVEL_TAG).text)
         # location = int(enemy.find(self.CONST.LOCATION_TAG).text)
         object_list = self.get_objects(enemy)
         return Enemy(name, description, level, object_list)
-
-    def __init__(self):
-        self.place_list = []
-        self.enemy_list = []
-        self.CONST = Const()
