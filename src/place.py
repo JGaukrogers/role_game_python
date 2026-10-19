@@ -1,6 +1,18 @@
+from .character import Enemy
+from .items import Item
+
+
 class Place:
 
-    def __init__(self, name, description, new_id, connections=None, objects=None, enemies=None):
+    def __init__(
+            self,
+            name: str,
+            description: str,
+            new_id: int,
+            connections: int | None = None,
+            objects: Item | None = None,
+            enemies: Enemy | None = None,
+    ) -> None:
         if connections is None:
             connections = []
         if objects is None:
@@ -16,16 +28,16 @@ class Place:
         self.enemies_list = enemies
         self.possiblePaths_list = []
 
-    def to_string(self):
-        return self.id + ': ' + self.name + ': ' + self.description
+    def to_string(self) -> str:
+        return f'{self.id}: {self.name} {self.description}'
 
-    def add_path(self, place):
+    def add_path(self, place: Place) -> None:
         self.possiblePaths_list.append(place)
 
-    def add_enemy(self, enemy):
+    def add_enemy(self, enemy: Enemy) -> None:
         self.enemies_list.append(enemy)
 
-    def get_full_description(self):
+    def get_full_description(self) -> str:
         string = self.description
         for e in self.enemies_list:
             if e.is_alive:
@@ -34,7 +46,7 @@ class Place:
                 string += '\n' + 'You see a dead ' + e.name
         return string
 
-    def __str__(self):
+    def __str__(self) -> str:
         string = self.id + ': ' + self.name
         for p in self.possiblePaths_list:
             string += ': ' + p.id

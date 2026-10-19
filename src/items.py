@@ -1,28 +1,28 @@
 class Item:
 
-    def __init__(self, name, description):
+    def __init__(self, name: str, description: str) -> None:
         self.name = name
         self.description = description
 
-    def __name__(self):
+    def __name__(self) -> str:
         return 'Item'
 
 
 class Weapon (Item):
 
-    def __init__(self, name, description, attack):
+    def __init__(self, name: str, description: str, attack: int) -> None:
         Item.__init__(self, name, description)
         self.attack = attack
 
-    def __name__(self):
+    def __name__(self) -> str:
         return 'Weapon'
 
 
 class Shield(Item):
 
-    def __init__(self, name, description, defense):
+    def __init__(self, name: str, description: str, defense: int) -> None:
         Item.__init__(self, name, description)
         self.defense = defense
 
-    def __name__(self):
+    def __name__(self) -> str:
             return 'Shield'
