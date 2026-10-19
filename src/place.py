@@ -17,7 +17,7 @@ class Place:
         self.possiblePaths_list = []
 
     def to_string(self):
-        return self.id + ": " + self.name + ": " + self.description
+        return self.id + ': ' + self.name + ': ' + self.description
 
     def add_path(self, place):
         self.possiblePaths_list.append(place)
@@ -29,13 +29,13 @@ class Place:
         string = self.description
         for e in self.enemies_list:
             if e.is_alive:
-                string += "\n" + "You see a " + e.name + ". " + e.description
+                string += '\n' + 'You see a ' + e.name + '. ' + e.description
             else:
-                string += "\n" + "You see a dead " + e.name
+                string += '\n' + 'You see a dead ' + e.name
         return string
 
     def __str__(self):
-        string = self.id + ": " + self.name
+        string = self.id + ': ' + self.name
         for p in self.possiblePaths_list:
-            string += ": " + p.id
+            string += ': ' + p.id
         return string

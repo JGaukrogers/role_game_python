@@ -8,28 +8,28 @@ def constant(f):
 class Const:
     @constant
     def PLACE_TAG():
-        return "place"
+        return 'place'
 
     @constant
     def MONSTERS_TAG():
-        return "enemie"
+        return 'enemie'
 
     @constant
     def NAME_TAG():
-        return "name"
+        return 'name'
 
     @constant
     def LEVEL_TAG():
-        return "level"
+        return 'level'
 
     @constant
     def DESCRIPTION_TAG():
-        return "description"
+        return 'description'
 
     @constant
     def LOCATION_TAG():
-        return "location"
+        return 'location'
 
     @constant
     def WEAPON_TAG():
-        return "weapon"
+        return 'weapon'

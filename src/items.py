@@ -5,7 +5,7 @@ class Item:
         self.description = description
 
     def __name__(self):
-        return "Item"
+        return 'Item'
 
 
 class Weapon (Item):
@@ -15,7 +15,7 @@ class Weapon (Item):
         self.attack = attack
 
     def __name__(self):
-        return "Weapon"
+        return 'Weapon'
 
 
 class Shield(Item):
@@ -25,4 +25,4 @@ class Shield(Item):
         self.defense = defense
 
     def __name__(self):
-            return "Shield"
+            return 'Shield'
