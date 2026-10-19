@@ -1,5 +1,3 @@
-import os
-
 from game_reader import GameReader
 from character import Protagonist
 
