@@ -97,7 +97,7 @@ def test_look_object_equipped_weapon():
     game = Game()
     game.load("games/LookTest.xml")
     game.pickup("sword")
-    game.equip("sword")
+    game.equip_item("sword")
     assert game.look_at("sword") == "Just a lousy sword. You have it equipped"
 
 
@@ -105,7 +105,7 @@ def test_look_object_equipped_shield():
     game = Game()
     game.load("games/LookTest.xml")
     game.pickup("shield")
-    game.equip("shield")
+    game.equip_item("shield")
     assert game.look_at("shield") == "Just a lousy shield. You have it equipped"
 
 
@@ -113,7 +113,7 @@ def test_look_object_not_equipped_amulet():
     game = Game()
     game.load("games/LookTest.xml")
     game.pickup("amulet")
-    game.equip("amulet")
+    game.equip_item("amulet")
     assert game.look_at("amulet") == "Pretty amulet"
 
 
@@ -122,10 +122,10 @@ def test_look_object_switch_equipped_weapon():
     game.load("games/LookTest.xml")
     game.pickup("sword")
     game.pickup("sword2")
-    game.equip("sword")
+    game.equip_item("sword")
     assert game.look_at("sword") == "Just a lousy sword. You have it equipped"
     assert game.look_at("sword2") == "Another sword"
-    game.equip("sword2")
+    game.equip_item("sword2")
     assert game.look_at("sword") == "Just a lousy sword"
     assert game.look_at("sword2") == "Another sword. You have it equipped"
 
@@ -244,7 +244,7 @@ def test_search_backpack_emptied():
     game = Game()
     game.load("games/SearchTest.xml")
     game.pickup("sword")
-    game.equip("sword")
+    game.equip_item("sword")
     assert game.search("backpack") == "You look in your backpack:"
 
 
@@ -260,14 +260,14 @@ def test_equip_weapon():
     game = Game()
     game.load("games/EquipTest.xml")
     game.pickup("sword+1")
-    assert game.equip("sword+1") == "You equipped your sword+1"
+    assert game.equip_item("sword+1") == "You equipped your sword+1"
 
 
 def test_equip_shield():
     game = Game()
     game.load("games/EquipTest.xml")
     game.pickup("shield+1")
-    assert game.equip("shield+1") == "You equipped your shield+1"
+    assert game.equip_item("shield+1") == "You equipped your shield+1"
 
 
 def test_reequip_weapon():
@@ -275,8 +275,8 @@ def test_reequip_weapon():
     game.load("games/EquipTest.xml")
     game.pickup("sword+1")
     game.pickup("sword+2")
-    game.equip("sword+1")
-    assert game.equip("sword+2") == "You equipped your sword+2"
+    game.equip_item("sword+1")
+    assert game.equip_item("sword+2") == "You equipped your sword+2"
     message = "You look in your backpack:" \
               + "\n\tYou have a sword+1"
     assert game.search("backpack") == message
@@ -287,8 +287,8 @@ def test_reequip_shield():
     game.load("games/EquipTest.xml")
     game.pickup("shield+1")
     game.pickup("shield+2")
-    game.equip("shield+1")
-    assert game.equip("shield+2") == "You equipped your shield+2"
+    game.equip_item("shield+1")
+    assert game.equip_item("shield+2") == "You equipped your shield+2"
     message = "You look in your backpack:" \
               + "\n\tYou have a shield+1"
     assert game.search("backpack") == message
@@ -298,35 +298,35 @@ def test_equip_equipped_weapon():
     game = Game()
     game.load("games/EquipTest.xml")
     game.pickup("sword+1")
-    game.equip("sword+1")
-    assert game.equip("sword+1") == "sword+1 is already equipped"
+    game.equip_item("sword+1")
+    assert game.equip_item("sword+1") == "sword+1 is already equipped"
 
 
 def test_equip_equipped_shield():
     game = Game()
     game.load("games/EquipTest.xml")
     game.pickup("shield+1")
-    game.equip("shield+1")
-    assert game.equip("shield+1") == "shield+1 is already equipped"
+    game.equip_item("shield+1")
+    assert game.equip_item("shield+1") == "shield+1 is already equipped"
 
 
 def test_equip_fail():
     game = Game()
     game.load("games/EquipTest.xml")
-    assert game.equip("nothing") == "You have no nothing to equip"
+    assert game.equip_item("nothing") == "You have no nothing to equip"
 
 
 def test_cannot_equip():
     game = Game()
     game.load("games/EquipTest.xml")
     game.pickup("amulet")
-    assert game.equip("amulet") == "You can't equip amulet"
+    assert game.equip_item("amulet") == "You can't equip amulet"
 
 
 def test_equip_nothing():
     game = Game()
     game.load("games/EquipTest.xml")
-    assert game.equip("sword+3") == "You have no sword+3 to equip"
+    assert game.equip_item("sword+3") == "You have no sword+3 to equip"
 
 # FIGHT
 
