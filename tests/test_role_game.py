@@ -1,4 +1,4 @@
-from role_game import Game
+from src import Game
 
 # To test, run:
 # python -m pytest tests/test_role_game.py

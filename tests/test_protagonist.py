@@ -1,8 +1,8 @@
+from src import Protagonist
 
 # To test, run:
 # python3 -m pytest tests/test_protagonist.py
 
-from character import Protagonist
 
 # from objects import Weapon, Shield
 

@@ -1,9 +1,9 @@
 import xml.etree.ElementTree as ET
 
-from character import Enemy
-from constants import Const
-from items import Item, Shield, Weapon
-from place import Place
+from .character import Enemy
+from .constants import Const
+from .items import Item, Shield, Weapon
+from .place import Place
 
 
 class GameReader:
