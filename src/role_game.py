@@ -1,16 +1,17 @@
 from .character import Protagonist
 from .game_reader import GameReader
+from .items import Item
 
 GAME_COMMANDS = ['LOOK', 'SEARCH', 'GO', 'FIGHT', 'EXIT', 'PICKUP', 'EQUIP']
 
 
 class Game:
     @staticmethod
-    def print_commands():
+    def print_commands() -> None:
         for s in sorted(GAME_COMMANDS):
             print(s)
 
-    def goto(self, where):
+    def goto(self, where: str) -> str:
         message = 'Cannot go to ' + where
         possible_goes = self.protagonist.location.possiblePaths_list
         for p in possible_goes:
@@ -19,7 +20,7 @@ class Game:
                 message = 'You go to ' + where
         return message
 
-    def look_at(self, what):
+    def look_at(self, what: str) -> str:
         message = ''
         message += self.look_at_location(what)
         message += self.look_at_self(what)
@@ -30,7 +31,7 @@ class Game:
             message = 'Cannot look at ' + what
         return message
 
-    def look_at_enemy(self, what):
+    def look_at_enemy(self, what: str) -> str:
         message = ''
         possible_enemies = self.protagonist.location.enemies_list
         for e in possible_enemies:
@@ -38,7 +39,7 @@ class Game:
                 message = e.description if e.is_alive else 'You see a dead ' + e.name
         return message
 
-    def look_at_object(self, what):
+    def look_at_object(self, what: str) -> str:
         message = ''
         possible_objects = self.protagonist.location.objects_list
         for o in possible_objects:
@@ -53,13 +54,13 @@ class Game:
             message = self.protagonist.shieldInHand.description + '. You have it equipped'
         return message
 
-    def look_at_self(self, what):
+    def look_at_self(self, what: str) -> str:
         message = ''
         if what.upper() == self.protagonist.location.name.upper():
             message = self.protagonist.location.description
         return message
 
-    def look_at_location(self, what):
+    def look_at_location(self, what: str) -> str:
         message = ''
         possible_goes = self.protagonist.location.possiblePaths_list
         for p in possible_goes:
@@ -67,7 +68,7 @@ class Game:
                 message = 'You can see the ' + what + ' from here'
         return message
 
-    def fight(self, who):
+    def fight(self, who: str) -> str:
         message = 'There is no ' + who + ' to fight'
         enemies = self.protagonist.location.enemies_list
         for e in enemies:
@@ -80,19 +81,20 @@ class Game:
                 break
         return message
 
-    def search(self, what=None):
+    def search(self, what: str|None=None) -> str:
         message = ''
         if what is None or what.upper() == self.protagonist.location.name.upper():
             message = self.search_items_in_location(message)
         elif what.upper() == 'BACKPACK':
-            message = self.search_items_in_backpack(message)
+            message = self.search_items_in_backpack()
         else:
-            message = self.search_items_on_enemy(message, what)
+            message = self.search_items_on_enemy(what)
             if message == '':
                 message = 'Cannot search ' + what
         return message
 
-    def search_items_on_enemy(self, message, what):
+    def search_items_on_enemy(self, what: str) -> str:
+        message = ''
         for e in self.protagonist.location.enemies_list:
             if e.name.upper() == what.upper():
                 if not e.is_alive:
@@ -106,7 +108,7 @@ class Game:
                     message = 'You cannot search ' + what + ' while it is alive!'
         return message
 
-    def search_items_in_backpack(self, message):
+    def search_items_in_backpack(self) -> str:
         objects_list = self.protagonist.rucksack
         message = 'You look in your backpack:'
         if len(objects_list) > 0:
@@ -114,7 +116,7 @@ class Game:
                 message += '\n\tYou have a ' + o.name
         return message
 
-    def search_items_in_location(self, message):
+    def search_items_in_location(self, message: str) -> str:
         objects_list = self.protagonist.location.objects_list
         if len(objects_list) == 0:
             message = 'Found nothing'
@@ -123,7 +125,7 @@ class Game:
                 message += 'You found a ' + o.name + '\n'
         return message
 
-    def pickup(self, what):
+    def pickup(self, what: str) -> str:
         message = ''
         message = self.pickup_from_floor(message, what)
         message = self.pickup_from_enemy(message, what)
@@ -132,7 +134,7 @@ class Game:
 
         return message
 
-    def pickup_from_enemy(self, message, what):
+    def pickup_from_enemy(self, message: str, what: str) -> str:
         if message == '':
             enemies_list = self.protagonist.location.enemies_list
             for e in enemies_list:
@@ -146,7 +148,7 @@ class Game:
                             break
         return message
 
-    def pickup_from_floor(self, message, what):
+    def pickup_from_floor(self, message: str, what: str) -> str:
         objects_list = self.protagonist.location.objects_list
         for o in objects_list:
             if o.name.upper() == what.upper():
@@ -156,23 +158,23 @@ class Game:
                 break
         return message
 
-    def equip_item(self, what):
+    def equip_item(self, what: str) -> str:
         message = 'You have no ' + what + ' to equip'
         item_list = self.protagonist.rucksack
         message = self.check_if_item_is_equiped(message, what)
         for o in item_list:
             if o.name.upper() == what.upper():
                 if o.__name__() == 'Weapon':
-                    message = self.equip_weapon(item_list, message, o, what)
+                    message = self.equip_weapon(item_list, o, what)
                     break
                 if o.__name__() == 'Shield':
-                    message = self.equip_shield(item_list, message, o, what)
+                    message = self.equip_shield(item_list, o, what)
                     break
                 message = "You can't equip " + what
                 break
         return message
 
-    def equip_shield(self, item_list, message, o, what):
+    def equip_shield(self, item_list: list[Item], o: Item, what: str) -> str:
         message = 'You equipped your ' + what
         if self.protagonist.shieldInHand is not None:
             item_list.append(self.protagonist.shieldInHand)
@@ -180,7 +182,7 @@ class Game:
         item_list.remove(o)
         return message
 
-    def equip_weapon(self, item_list, message, o, what):
+    def equip_weapon(self, item_list: list[Item], o: Item, what: str) -> str:
         message = 'You equipped your ' + what
         if self.protagonist.weaponInHand is not None:
             item_list.append(self.protagonist.weaponInHand)
@@ -188,7 +190,7 @@ class Game:
         item_list.remove(o)
         return message
 
-    def check_if_item_is_equiped(self, message, what):
+    def check_if_item_is_equiped(self, message: str, what: str) -> str:
         if self.protagonist.shieldInHand is not None and self.protagonist.shieldInHand.name.upper() == what.upper():
             message = what + ' is already equipped'
         if self.protagonist.weaponInHand is not None and self.protagonist.weaponInHand.name.upper() == what.upper():
@@ -196,7 +198,7 @@ class Game:
         return message
 
     # Play!
-    def play_game(self):
+    def play_game(self) -> None:
         print('What do you wish to do?')
         self.print_commands()
 
@@ -243,7 +245,7 @@ class Game:
                 self.print_commands()
 
     # Loads a game
-    def load(self, path):
+    def load(self, path: str) -> None:
         gr = GameReader()
         gr.parse_game(path)
 
@@ -267,7 +269,7 @@ class Game:
         self.protagonist.location = self.begin_place
 
     # Returns true for loading a game, or false for exiting
-    def load_or_exit(self):
+    def load_or_exit(self) -> bool:
         print('load games/DemoGame.xml')  # for testing purposes
 
         split_command = ['0']
@@ -287,7 +289,7 @@ class Game:
                     print('Error occurred: syntax must be "load $GAME_DIR"')
         return False
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.places_array = None
         self.begin_place = None
         self.enemies_array = None
