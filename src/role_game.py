@@ -20,21 +20,26 @@ class Game:
         return message
 
     def look_at(self, what):
-        message = "Cannot look at " + what
-        message = self.look_at_location(message, what)
-        message = self.look_at_self(message, what)
-        message = self.look_at_object(message, what)
-        message = self.look_at_enemy(message, what)
+        message = ""
+        message += self.look_at_location(what)
+        message += self.look_at_self(what)
+        message += self.look_at_object(what)
+        message += self.look_at_enemy(what)
+
+        if not message:
+            message = "Cannot look at " + what
         return message
 
-    def look_at_enemy(self, message, what):
+    def look_at_enemy(self, what):
+        message = ""
         possible_enemies = self.protagonist.location.enemies_list
         for e in possible_enemies:
             if e.name.upper() == what.upper():
                 message = e.description if e.is_alive else "You see a dead " + e.name
         return message
 
-    def look_at_object(self, message, what):
+    def look_at_object(self, what):
+        message = ""
         possible_objects = self.protagonist.location.objects_list
         for o in possible_objects:
             if o.name.upper() == what.upper():
@@ -48,12 +53,14 @@ class Game:
             message = self.protagonist.shieldInHand.description + ". You have it equipped"
         return message
 
-    def look_at_self(self, message, what):
+    def look_at_self(self, what):
+        message = ""
         if what.upper() == self.protagonist.location.name.upper():
             message = self.protagonist.location.description
         return message
 
-    def look_at_location(self, message, what):
+    def look_at_location(self, what):
+        message = ""
         possible_goes = self.protagonist.location.possiblePaths_list
         for p in possible_goes:
             if p.name.upper() == what.upper():
