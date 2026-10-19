@@ -3,15 +3,22 @@ from .items import Item
 
 
 class Place:
+    name: str
+    description: str
+    id: int
+    connections_list: list[int]
+    objects_list: list[Item]
+    enemies_list: list[Enemy]
+    possiblePaths_list: list
 
     def __init__(
             self,
             name: str,
             description: str,
             new_id: int,
-            connections: int | None = None,
-            objects: Item | None = None,
-            enemies: Enemy | None = None,
+            connections: list[int] | None = None,
+            objects: list[Item] | None = None,
+            enemies: list[Enemy] | None = None,
     ) -> None:
         if connections is None:
             connections = []
@@ -41,13 +48,13 @@ class Place:
         string = self.description
         for e in self.enemies_list:
             if e.is_alive:
-                string += '\n' + 'You see a ' + e.name + '. ' + e.description
+                string += f'\nYou see a {e.name}. {e.description}'
             else:
-                string += '\n' + 'You see a dead ' + e.name
+                string += f'\nYou see a dead {e.name}'
         return string
 
     def __str__(self) -> str:
-        string = self.id + ': ' + self.name
+        string = f'{self.id}: {self.name}'
         for p in self.possiblePaths_list:
             string += ': ' + p.id
         return string

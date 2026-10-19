@@ -12,7 +12,7 @@ class Game:
             print(s)
 
     def goto(self, where: str) -> str:
-        message = 'Cannot go to ' + where
+        message = f'Cannot go to {where}'
         possible_goes = self.protagonist.location.possiblePaths_list
         for p in possible_goes:
             if p.name.upper() == where.upper():
@@ -28,7 +28,7 @@ class Game:
         message += self.look_at_enemy(what)
 
         if not message:
-            message = 'Cannot look at ' + what
+            message = f'Cannot look at {what}'
         return message
 
     def look_at_enemy(self, what: str) -> str:
@@ -36,7 +36,7 @@ class Game:
         possible_enemies = self.protagonist.location.enemies_list
         for e in possible_enemies:
             if e.name.upper() == what.upper():
-                message = e.description if e.is_alive else 'You see a dead ' + e.name
+                message = e.description if e.is_alive else 'You see a dead {e.name}'
         return message
 
     def look_at_object(self, what: str) -> str:
@@ -49,9 +49,9 @@ class Game:
             if o.name.upper() == what.upper():
                 message = o.description
         if self.protagonist.weaponInHand is not None and self.protagonist.weaponInHand.name.upper() == what.upper():
-            message = self.protagonist.weaponInHand.description + '. You have it equipped'
+            message = f'{self.protagonist.weaponInHand.description}. You have it equipped'
         if self.protagonist.shieldInHand is not None and self.protagonist.shieldInHand.name.upper() == what.upper():
-            message = self.protagonist.shieldInHand.description + '. You have it equipped'
+            message = f'{self.protagonist.shieldInHand.description}. You have it equipped'
         return message
 
     def look_at_self(self, what: str) -> str:
@@ -65,19 +65,19 @@ class Game:
         possible_goes = self.protagonist.location.possiblePaths_list
         for p in possible_goes:
             if p.name.upper() == what.upper():
-                message = 'You can see the ' + what + ' from here'
+                message = f'You can see the {what} from here'
         return message
 
     def fight(self, who: str) -> str:
-        message = 'There is no ' + who + ' to fight'
+        message = f'There is no {who} to fight'
         enemies = self.protagonist.location.enemies_list
         for e in enemies:
             if e.name.upper() == who.upper():
                 if e.is_alive:
                     e.kill()
-                    message = 'You just killed the ' + who
+                    message = f'You just killed the {who}'
                 else:
-                    message = who + ' is already dead'
+                    message = f'{who} is already dead'
                 break
         return message
 
@@ -90,7 +90,7 @@ class Game:
         else:
             message = self.search_items_on_enemy(what)
             if message == '':
-                message = 'Cannot search ' + what
+                message = f'Cannot search {what}'
         return message
 
     def search_items_on_enemy(self, what: str) -> str:
@@ -100,12 +100,12 @@ class Game:
                 if not e.is_alive:
                     objects_list = e.object_list
                     if len(objects_list) == 0:
-                        message = 'Found nothing in ' + what
+                        message = f'Found nothing in {what}'
                     else:
                         for o in objects_list:
-                            message += 'You found a ' + o.name + '\n'
+                            message += f'You found a {o.name}\n'
                 else:
-                    message = 'You cannot search ' + what + ' while it is alive!'
+                    message = f'You cannot search {what} while it is alive!'
         return message
 
     def search_items_in_backpack(self) -> str:
@@ -113,7 +113,7 @@ class Game:
         message = 'You look in your backpack:'
         if len(objects_list) > 0:
             for o in objects_list:
-                message += '\n\tYou have a ' + o.name
+                message += f'\n\tYou have a {o.name}'
         return message
 
     def search_items_in_location(self, message: str) -> str:
@@ -122,7 +122,7 @@ class Game:
             message = 'Found nothing'
         else:
             for o in objects_list:
-                message += 'You found a ' + o.name + '\n'
+                message += f'You found a {o.name}\n'
         return message
 
     def pickup(self, what: str) -> str:
@@ -130,7 +130,7 @@ class Game:
         message = self.pickup_from_floor(message, what)
         message = self.pickup_from_enemy(message, what)
         if message == '':
-            message = 'Cannot pickup ' + what
+            message = f'Cannot pickup {what}'
 
         return message
 
@@ -144,7 +144,7 @@ class Game:
                         if o.name.upper() == what.upper():
                             self.protagonist.rucksack.append(o)
                             objects_list.remove(o)
-                            message = 'You just picked up a ' + what
+                            message = f'You just picked up a {what}'
                             break
         return message
 
@@ -154,12 +154,12 @@ class Game:
             if o.name.upper() == what.upper():
                 self.protagonist.rucksack.append(o)
                 objects_list.remove(o)
-                message = 'You just picked up a ' + what
+                message = f'You just picked up a {what}'
                 break
         return message
 
     def equip_item(self, what: str) -> str:
-        message = 'You have no ' + what + ' to equip'
+        message = f'You have no {what} to equip'
         item_list = self.protagonist.rucksack
         message = self.check_if_item_is_equiped(message, what)
         for o in item_list:
@@ -170,7 +170,7 @@ class Game:
                 if o.__name__() == 'Shield':
                     message = self.equip_shield(item_list, o, what)
                     break
-                message = "You can't equip " + what
+                message = f"You can't equip {what}"
                 break
         return message
 
@@ -192,9 +192,9 @@ class Game:
 
     def check_if_item_is_equiped(self, message: str, what: str) -> str:
         if self.protagonist.shieldInHand is not None and self.protagonist.shieldInHand.name.upper() == what.upper():
-            message = what + ' is already equipped'
+            message = f'{what} is already equipped'
         if self.protagonist.weaponInHand is not None and self.protagonist.weaponInHand.name.upper() == what.upper():
-            message = what + ' is already equipped'
+            message = f'{what} is already equipped'
         return message
 
     # Play!
