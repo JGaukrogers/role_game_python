@@ -1,10 +1,8 @@
-import pytest
-
 from role_game import Game
 
 
 # To test, run:
-# python3 -m pytest tests/test_role_game.py
+# python -m pytest tests/test_role_game.py
 
 # @pytest.mark.parametrize(
 #     "data, expectation", [
