@@ -1,6 +1,5 @@
 from role_game import Game
 
-
 # To test, run:
 # python -m pytest tests/test_role_game.py
 
@@ -176,18 +175,18 @@ def test_pick_up_nonexistent():
 def test_search_basic():
     game = Game()
     game.load("games/SearchTest.xml")
-    message = "You found a sword\n" \
-              + "You found a amulet\n" \
-              + "You found a shield\n"
+    message = ("You found a sword\n"
+               "You found a amulet\n"
+               "You found a shield\n")
     assert game.search() == message
 
 
 def test_search_place_full():
     game = Game()
     game.load("games/SearchTest.xml")
-    message = "You found a sword\n" \
-              + "You found a amulet\n" \
-              + "You found a shield\n"
+    message = ("You found a sword\n"
+               "You found a amulet\n"
+               "You found a shield\n")
     assert game.search("Forest") == message
 
 
@@ -225,10 +224,10 @@ def test_search_backpack_full():
     game.pickup("sword")
     game.pickup("amulet")
     game.pickup("shield")
-    message = "You look in your backpack:" \
-              + "\n\tYou have a sword" \
-              + "\n\tYou have a amulet" \
-              + "\n\tYou have a shield"
+    message = ("You look in your backpack:"
+               "\n\tYou have a sword"
+               "\n\tYou have a amulet"
+               "\n\tYou have a shield")
     assert game.search("backpack") == message
 
 
@@ -275,8 +274,8 @@ def test_reequip_weapon():
     game.pickup("sword+2")
     game.equip_item("sword+1")
     assert game.equip_item("sword+2") == "You equipped your sword+2"
-    message = "You look in your backpack:" \
-              + "\n\tYou have a sword+1"
+    message = ("You look in your backpack:"
+               "\n\tYou have a sword+1")
     assert game.search("backpack") == message
 
 
@@ -287,8 +286,8 @@ def test_reequip_shield():
     game.pickup("shield+2")
     game.equip_item("shield+1")
     assert game.equip_item("shield+2") == "You equipped your shield+2"
-    message = "You look in your backpack:" \
-              + "\n\tYou have a shield+1"
+    message = ("You look in your backpack:"
+               "\n\tYou have a shield+1")
     assert game.search("backpack") == message
 
 

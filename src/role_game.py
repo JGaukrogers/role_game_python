@@ -1,5 +1,5 @@
-from game_reader import GameReader
 from character import Protagonist
+from game_reader import GameReader
 
 GAME_COMMANDS = ["LOOK", "SEARCH", "GO", "FIGHT", "EXIT", "PICKUP", "EQUIP"]
 
@@ -31,10 +31,7 @@ class Game:
         possible_enemies = self.protagonist.location.enemies_list
         for e in possible_enemies:
             if e.name.upper() == what.upper():
-                if e.is_alive:
-                    message = e.description
-                else:
-                    message = "You see a dead " + e.name
+                message = e.description if e.is_alive else "You see a dead " + e.name
         return message
 
     def look_at_object(self, message, what):
@@ -161,12 +158,11 @@ class Game:
                 if o.__name__() == 'Weapon':
                     message = self.equip_weapon(item_list, message, o, what)
                     break
-                elif o.__name__() == 'Shield':
+                if o.__name__() == 'Shield':
                     message = self.equip_shield(item_list, message, o, what)
                     break
-                else:
-                    message = "You can't equip " + what
-                    break
+                message = "You can't equip " + what
+                break
         return message
 
     def equip_shield(self, item_list, message, o, what):
@@ -234,7 +230,6 @@ class Game:
                     print("Equip what?")
                 else:
                     print(self.equip_item(split_command[1]))
-                pass
             elif split_command[0] == "EXIT":
                 print("bye")
             else:
@@ -270,7 +265,8 @@ class Game:
 
         split_command = ["0"]
         while split_command[0] != "EXIT":
-            user_command = input("Type \"load $GAME_PATH\" for loading a new game.\nType \"exit\" to exit program:\n")
+            user_command = input("Type \"load $GAME_PATH\" for loading a new game.\n"
+                                 "Type \"exit\" to exit program:\n")
             split_command = user_command.split()
             split_command[0] = split_command[0].upper()
             if split_command[0] == "LOAD":
@@ -278,7 +274,7 @@ class Game:
                     try:
                         self.load(split_command[1])
                         return True
-                    except IOError:
+                    except OSError:
                         print("File " + split_command[1] + " doesn't seem to exist")
                 else:
                     print("Error occurred: syntax must be \"load $GAME_DIR\"")

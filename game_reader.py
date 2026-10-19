@@ -1,11 +1,9 @@
 import xml.etree.ElementTree as ET
 
-from constants import Const
-from place import Place
 from character import Enemy
-from items import Weapon
-from items import Item
-from items import Shield
+from constants import Const
+from items import Item, Shield, Weapon
+from place import Place
 
 
 class GameReader:
@@ -29,16 +27,12 @@ class GameReader:
             connection_list.append(aux)
 
         objects = place.find('objects')
-        if objects is not None:
-            object_list = self.get_objects(objects)
-        else:
-            object_list = []
+        object_list = self.get_objects(objects) if objects is not None else []
         enemy_list = []
         for enemy in place.iter('enemy'):
             enemy_list.append(self.get_enemy(enemy))
 
-        p = Place(place_name, description, place_id, connection_list, object_list, enemy_list)
-        return p
+        return Place(place_name, description, place_id, connection_list, object_list, enemy_list)
 
     @staticmethod
     def get_objects(place):

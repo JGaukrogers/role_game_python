@@ -17,8 +17,7 @@ class Place:
         self.possiblePaths_list = []
 
     def to_string(self):
-        string = self.id + ": " + self.name + ": " + self.description
-        return string
+        return self.id + ": " + self.name + ": " + self.description
 
     def add_path(self, place):
         self.possiblePaths_list.append(place)

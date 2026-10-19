@@ -5,7 +5,7 @@ def constant(f):
         return f()
     return property(fget, fset)
 
-class Const(object):
+class Const:
     @constant
     def PLACE_TAG():
         return "place"
