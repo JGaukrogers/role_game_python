@@ -1,13 +1,9 @@
+import pytest
+
 from src import Game
 
 # To test, run:
 # python -m pytest tests/test_role_game.py
-
-# @pytest.mark.parametrize(
-#     "data, expectation", [
-#         ("a", b)
-#     ]
-# )
 
 
 # GO test
@@ -33,22 +29,18 @@ def test_not_connected_place_test():
 
 
 # places
-def test_basic_look_place_test():
+@pytest.mark.parametrize(
+    'place_name, expected_result',
+    [
+        ('forest', 'It is a nice forest.'),
+        ('sea', 'You can see the sea from here'),
+        ('town', 'Cannot look at town'),
+    ],
+)
+def test_look_place_test(place_name: str, expected_result: str):
     game = Game()
-    game.load("games/LookTest.xml")
-    assert game.look_at("forest") == "It is a nice forest."
-
-
-def test_look_next_place_test():
-    game = Game()
-    game.load("games/LookTest.xml")
-    assert game.look_at("sea") == "You can see the sea from here"
-
-
-def test_look_far_place_test():
-    game = Game()
-    game.load("games/LookTest.xml")
-    assert game.look_at("town") == "Cannot look at town"
+    game.load('games/LookTest.xml')
+    assert game.look_at(place_name) == expected_result
 
 
 # enemies
@@ -59,28 +51,18 @@ def test_basic_look_enemy():
 
 
 # items
-def test_look_object_at_floor():
+@pytest.mark.parametrize(
+    'object_name, expected_result',
+    [
+        ('sword', 'Just a lousy sword'),
+        ('shield', 'Just a lousy shield'),
+        ('amulet', 'Pretty amulet'),
+    ],
+)
+def test_look_object_in_room(object_name: str, expected_result: str):
     game = Game()
-    game.load("games/LookTest.xml")
-    assert game.look_at("sword") == "Just a lousy sword"
-
-
-def test_look_object_at_floor_weapon():
-    game = Game()
-    game.load("games/LookTest.xml")
-    assert game.look_at("sword") == "Just a lousy sword"
-
-
-def test_look_object_at_floor_shield():
-    game = Game()
-    game.load("games/LookTest.xml")
-    assert game.look_at("shield") == "Just a lousy shield"
-
-
-def test_look_object_at_floor_item():
-    game = Game()
-    game.load("games/LookTest.xml")
-    assert game.look_at("amulet") == "Pretty amulet"
+    game.load('games/LookTest.xml')
+    assert game.look_at('sword') == 'Just a lousy sword'
 
 
 def test_look_object_in_backpack():
@@ -90,28 +72,20 @@ def test_look_object_in_backpack():
     assert game.look_at('sword') == 'Just a lousy sword'
 
 
-def test_look_object_equipped_weapon():
+@pytest.mark.parametrize(
+    'object_name, expected_result',
+    [
+        ('sword', 'Just a lousy sword. You have it equipped'),
+        ('shield', 'Just a lousy shield. You have it equipped'),
+        ('amulet', 'Pretty amulet'),
+    ],
+)
+def test_equip_item_and_look(object_name: str, expected_result: str):
     game = Game()
     game.load('games/LookTest.xml')
-    game.pickup('sword')
-    game.equip_item('sword')
-    assert game.look_at('sword') == 'Just a lousy sword. You have it equipped'
-
-
-def test_look_object_equipped_shield():
-    game = Game()
-    game.load('games/LookTest.xml')
-    game.pickup('shield')
-    game.equip_item('shield')
-    assert game.look_at('shield') == 'Just a lousy shield. You have it equipped'
-
-
-def test_look_object_not_equipped_amulet():
-    game = Game()
-    game.load('games/LookTest.xml')
-    game.pickup('amulet')
-    game.equip_item('amulet')
-    assert game.look_at('amulet') == 'Pretty amulet'
+    game.pickup(object_name)
+    game.equip_item(object_name)
+    assert game.look_at(object_name) == expected_result
 
 
 def test_look_object_switch_equipped_weapon():
@@ -175,18 +149,16 @@ def test_pick_up_nonexistent():
 def test_search_basic():
     game = Game()
     game.load('games/SearchTest.xml')
-    message = 'You found a sword\nYou found a amulet\nYou found a shield\n'
-    assert game.search() == message
+    assert game.search() == 'You found a sword\nYou found a amulet\nYou found a shield\n'
 
 
 def test_search_place_full():
     game = Game()
     game.load('games/SearchTest.xml')
-    message = 'You found a sword\nYou found a amulet\nYou found a shield\n'
-    assert game.search('Forest') == message
+    assert game.search('Forest') == 'You found a sword\nYou found a amulet\nYou found a shield\n'
 
 
-def test_search_place_empty():
+def test_search_empty_place():
     game = Game()
     game.load('games/SearchTest.xml')
     game.goto('sea')
@@ -200,18 +172,18 @@ def test_search_alive_enemy():
     assert game.search('Enemy1') == 'You cannot search Enemy1 while it is alive!'
 
 
-def test_search_dead_enemy1():
+@pytest.mark.parametrize(
+    'enemy_name, expected_result',
+    [
+        ('Enemy1', 'You found a ring\n'),
+        ('Enemy2', 'Found nothing in Enemy2'),
+    ],
+)
+def test_search_dead_enemy(enemy_name: str, expected_result: str):
     game = Game()
     game.load('games/SearchTest.xml')
-    game.fight('Enemy1')
-    assert game.search('Enemy1') == 'You found a ring\n'
-
-
-def test_search_dead_enemy2():
-    game = Game()
-    game.load('games/SearchTest.xml')
-    game.fight('Enemy2')
-    assert game.search('Enemy2') == 'Found nothing in Enemy2'
+    game.fight(enemy_name)
+    assert game.search(enemy_name) == expected_result
 
 
 def test_search_backpack_full():
@@ -247,18 +219,18 @@ def test_search_nonexistent():
 # EQUIP
 
 
-def test_equip_weapon():
+@pytest.mark.parametrize(
+    'item_name, expected_result',
+    [
+        ('sword+1', 'You equipped your sword+1'),
+        ('shield+1', 'You equipped your shield+1'),
+    ],
+)
+def test_equip_item(item_name: str, expected_result: str):
     game = Game()
     game.load('games/EquipTest.xml')
     game.pickup('sword+1')
     assert game.equip_item('sword+1') == 'You equipped your sword+1'
-
-
-def test_equip_shield():
-    game = Game()
-    game.load('games/EquipTest.xml')
-    game.pickup('shield+1')
-    assert game.equip_item('shield+1') == 'You equipped your shield+1'
 
 
 def test_reequip_weapon():
@@ -299,10 +271,19 @@ def test_equip_equipped_shield():
     assert game.equip_item('shield+1') == 'shield+1 is already equipped'
 
 
-def test_equip_fail():
+@pytest.mark.parametrize(
+    'item_name, expected_result',
+    [
+        # We can't equip a nonexistent item
+        ('nothing', 'You have no nothing to equip'),
+        # We can't equip an item that exists butt we don't posess
+        ('sword+3', 'You have no sword+3 to equip'),
+    ],
+)
+def test_equip_fail(item_name: str, expected_result: str):
     game = Game()
     game.load('games/EquipTest.xml')
-    assert game.equip_item('nothing') == 'You have no nothing to equip'
+    assert game.equip_item(item_name) == expected_result
 
 
 def test_cannot_equip():
@@ -312,19 +293,24 @@ def test_cannot_equip():
     assert game.equip_item('amulet') == "You can't equip amulet"
 
 
-def test_equip_nothing():
-    game = Game()
-    game.load('games/EquipTest.xml')
-    assert game.equip_item('sword+3') == 'You have no sword+3 to equip'
-
-
 # FIGHT
 
 
-def test_fight_basic():
+@pytest.mark.parametrize(
+    'enemy_name, expected_result',
+    [
+        # We can fight against an existing enemy while in the same room
+        ('enemy1', 'You just killed the enemy1'),
+        # We can't fight against an existing enemy while located in a different room
+        ('enemy3', 'There is no enemy3 to fight'),
+        # We can't fight against a nonexisting enemy
+        ('nonexistent', 'There is no nonexistent to fight'),
+    ],
+)
+def test_fight_basic(enemy_name: str, expected_result: str):
     game = Game()
     game.load('games/FightTest.xml')
-    assert game.fight('enemy1') == 'You just killed the enemy1'
+    assert game.fight(enemy_name) == expected_result
 
 
 def test_fight_dead_enemy():
@@ -332,16 +318,3 @@ def test_fight_dead_enemy():
     game.load('games/FightTest.xml')
     game.fight('enemy1')
     assert game.fight('enemy1') == 'enemy1 is already dead'
-
-
-def test_fight_enemy_in_other_place():
-    game = Game()
-    game.load('games/FightTest.xml')
-    game.fight('enemy3')
-    assert game.fight('enemy3') == 'There is no enemy3 to fight'
-
-
-def test_fight_basic_fail():
-    game = Game()
-    game.load('games/FightTest.xml')
-    assert game.fight('nonexistent') == 'There is no nonexistent to fight'
