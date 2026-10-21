@@ -16,6 +16,7 @@ class TagType(Enum):
     WEAPON = 'weapon'
     ID = 'id'
 
+
 class GameReader:
     place_list: list[Place]
     enemy_list: list[Enemy]

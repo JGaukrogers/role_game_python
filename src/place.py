@@ -1,5 +1,8 @@
-from .character import Enemy
-from .items import Item
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .character import Enemy
+    from .items import Item
 
 
 class Place:
@@ -12,13 +15,13 @@ class Place:
     possiblePaths_list: list
 
     def __init__(
-            self,
-            name: str,
-            description: str,
-            new_id: int,
-            connections: list[int] | None = None,
-            objects: list[Item] | None = None,
-            enemies: list[Enemy] | None = None,
+        self,
+        name: str,
+        description: str,
+        new_id: int,
+        connections: list[int] | None = None,
+        objects: list[Item] | None = None,
+        enemies: list[Enemy] | None = None,
     ) -> None:
         if connections is None:
             connections = []

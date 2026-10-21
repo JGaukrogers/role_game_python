@@ -32,6 +32,6 @@ from src import Protagonist
 
 
 def test_increase_level():
-    protagonist = Protagonist("name", "description")
+    protagonist = Protagonist('name', 'description')
     protagonist.increase_level()
     assert protagonist.level == 2

@@ -1,4 +1,7 @@
-from .items import Item, Shield, Weapon
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .items import Item, Shield, Weapon
 
 
 class Character:
@@ -30,8 +33,8 @@ class Protagonist(Character):
     level: int
     location: list[Item] | None
     rucksack: list[Item]
-    weaponInHand: Weapon|None
-    shieldInHand: Shield|None
+    weaponInHand: Weapon | None
+    shieldInHand: Shield | None
 
     def increase_level(self) -> None:
         self.level += 1

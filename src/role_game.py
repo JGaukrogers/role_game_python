@@ -1,6 +1,10 @@
+from typing import TYPE_CHECKING
+
 from .character import Protagonist
 from .game_reader import GameReader
-from .items import Item
+
+if TYPE_CHECKING:
+    from .items import Item
 
 GAME_COMMANDS = ['LOOK', 'SEARCH', 'GO', 'FIGHT', 'EXIT', 'PICKUP', 'EQUIP']
 
@@ -81,7 +85,7 @@ class Game:
                 break
         return message
 
-    def search(self, what: str|None=None) -> str:
+    def search(self, what: str | None = None) -> str:
         message = ''
         if what is None or what.upper() == self.protagonist.location.name.upper():
             message = self.search_items_in_location(message)
@@ -274,8 +278,7 @@ class Game:
 
         split_command = ['0']
         while split_command[0] != 'EXIT':
-            user_command = input('Type "load $GAME_PATH" for loading a new game.\n'
-                                 'Type "exit" to exit program:\n')
+            user_command = input('Type "load $GAME_PATH" for loading a new game.\nType "exit" to exit program:\n')
             split_command = user_command.split()
             split_command[0] = split_command[0].upper()
             if split_command[0] == 'LOAD':

@@ -1,5 +1,4 @@
 class Item:
-
     name: str
     description: str
 
@@ -11,8 +10,7 @@ class Item:
         return 'Item'
 
 
-class Weapon (Item):
-
+class Weapon(Item):
     attack: int
 
     def __init__(self, name: str, description: str, attack: int) -> None:
@@ -24,7 +22,6 @@ class Weapon (Item):
 
 
 class Shield(Item):
-
     defense: int
 
     def __init__(self, name: str, description: str, defense: int) -> None:
@@ -32,4 +29,4 @@ class Shield(Item):
         self.defense = defense
 
     def __name__(self) -> str:
-            return 'Shield'
+        return 'Shield'
